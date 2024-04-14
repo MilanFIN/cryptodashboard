@@ -7,6 +7,7 @@ import {
 } from "../actions/crypto";
 import { DashboardRow } from "./DashboardRow";
 import SavedProvider from "../context/LocalContextProvider";
+import { IconSource } from "../actions/images";
 
 type SortType = {
     col: number;
@@ -15,7 +16,10 @@ type SortType = {
 
 const tableHeaderColumns = ["#", "Name", "Market Cap", "Change 24h"];
 
-export default function DashboardTable(props: { items: CoinDetails[] }) {
+export default function DashboardTable(props: {
+    items: CoinDetails[];
+    icons: IconSource[];
+}) {
     const [items, setItems] = useState(props.items);
     const [currentSort, setCurrentSort] = useState<SortType>({
         col: 0,
@@ -72,7 +76,8 @@ export default function DashboardTable(props: { items: CoinDetails[] }) {
                             onClick={() => sortBy(ind)}
                             key={"headercolumn_" + ind}
                         >
-                            {getSortArrow(ind)}{i}
+                            {getSortArrow(ind)}
+                            {i}
                         </td>
                     ))}
                 </tr>
@@ -80,7 +85,7 @@ export default function DashboardTable(props: { items: CoinDetails[] }) {
             <tbody className="divide-y divide-solid divide-y-2">
                 {items.map((i) => (
                     <tr key={i.symbol}>
-                        <DashboardRow content={i} />
+                        <DashboardRow content={i} icons={props.icons}   />
                     </tr>
                 ))}
             </tbody>
