@@ -1,12 +1,9 @@
 "use client";
-import { Suspense, useState } from "react";
+import {  useEffect, useState } from "react";
 import {
     CoinDetails,
-    DashboardRowContent,
-    getDashContent,
 } from "../actions/crypto";
 import { DashboardRow } from "./DashboardRow";
-import SavedProvider from "../context/LocalContextProvider";
 import { IconSource } from "../actions/images";
 
 type SortType = {
@@ -14,17 +11,21 @@ type SortType = {
     ascending: boolean;
 };
 
-const tableHeaderColumns = ["#", "Name", "Market Cap", "Change 24h"];
+const tableHeaderColumns = ["#", "Name", "Price", "Market Cap", "Change 24h"];
 
 export default function DashboardTable(props: {
     items: CoinDetails[];
     icons: IconSource[];
 }) {
-    const [items, setItems] = useState(props.items);
+    const [items, setItems] = useState<CoinDetails[]>([]);
     const [currentSort, setCurrentSort] = useState<SortType>({
         col: 0,
         ascending: true,
     });
+
+    useEffect(() => {
+        setItems(props.items);
+    }, [])
 
     function sortBy(col: number) {
         if (currentSort.col === col) {
@@ -84,8 +85,8 @@ export default function DashboardTable(props: {
             </thead>
             <tbody className="divide-y divide-solid divide-y-2">
                 {items.map((i) => (
-                    <tr key={i.symbol}>
-                        <DashboardRow content={i} icons={props.icons}   />
+                    <tr key={"contentrow_"+i.symbol}>
+                        <DashboardRow content={i} icons={props.icons} />
                     </tr>
                 ))}
             </tbody>

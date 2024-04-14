@@ -10,8 +10,6 @@ export default function Home({ params }: { params: { page: string[] } }) {
     if (page < 1) {
         page = 1;
     }
-    const next = page + 1;
-    const prev = page - 1;
     return (
         <main className=" min-h-screen ">
             <Dashboard page={page} />

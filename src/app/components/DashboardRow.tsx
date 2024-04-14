@@ -1,25 +1,29 @@
+"use client";
 import Link from "next/link";
 import { CoinDetails, DashboardRowContent } from "../actions/crypto";
 import { SavedField } from "./Savedfield";
 import { IconSource } from "../actions/images";
+import { useEffect, useState } from "react";
 
-export async function DashboardRow(props: {
+export function DashboardRow(props: {
     content: CoinDetails;
     icons: IconSource[];
 }) {
-    let img = "";
-    if (
-        props.icons.some((i) => i.symbol === props.content.symbol.toLowerCase())
-    ) {
-        img = props.icons.filter(
-            (i) => i.symbol === props.content.symbol.toLowerCase()
-        )[0].content;
-    }
-    else {
-        img = props.icons.filter(
-            (i) => i.symbol === "generic"
-        )[0].content;
-    }
+    const [img, setImg] = useState("");
+
+    useEffect(() => {
+        if (
+            props.icons.some(
+                (i) => i.symbol === props.content.symbol.toLowerCase()
+            )
+        ) {
+            setImg(props.icons.filter(
+                (i) => i.symbol === props.content.symbol.toLowerCase()
+            )[0].content)
+        } else {
+            setImg(props.icons.filter((i) => i.symbol === "generic")[0].content)
+        }
+    });
     return (
         <>
             <td className="py-3 px-2">
@@ -32,13 +36,12 @@ export async function DashboardRow(props: {
                     href={"/coin/" + props.content.id}
                     className="flex flex-wrap"
                 >
-
-                        <img
-                            src={`data:image/svg+xml;base64,${btoa(img)}`}
-                            width="25"
-                            height="25"
-                            className="mr-2"
-                        ></img>
+                    <img
+                        src={`data:image/svg+xml;base64,${btoa(img)}`}
+                        width="25"
+                        height="25"
+                        className="mr-2"
+                    ></img>
                     <span className="font-bold mr-2">
                         {props.content.name}{" "}
                     </span>
