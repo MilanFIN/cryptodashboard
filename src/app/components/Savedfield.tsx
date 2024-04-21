@@ -11,8 +11,8 @@ export function SavedField(props: { id: string }) {
 
 
     if (saved.some((i) => i == props.id)) {
-        return <div className="cursor-pointer" onClick={() => removeSaved(props.id)}>saved</div>;
+        return <div className="cursor-pointer" onClick={() => removeSaved(props.id)}>[x]</div>;
     } else {
-        return <div className="cursor-pointer" onClick={() => addSaved(props.id)}>not saved</div>;
+        return <div className="cursor-pointer" onClick={() => addSaved(props.id)}>[ ]</div>;
     }
 }

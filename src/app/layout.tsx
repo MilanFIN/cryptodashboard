@@ -20,13 +20,11 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className}>
-                <div className="w-full grid justify-items-center">
-                    <div className="xl:w-[800px] w-full">
-                        <ClientLayout>
-                            <NavBar />
-                            {children}
-                        </ClientLayout>
-                    </div>
+                <div className="w-full grid justify-items-center  mb-4">
+                    <ClientLayout>
+                        <NavBar />
+                        {children}
+                    </ClientLayout>
                 </div>
             </body>
         </html>

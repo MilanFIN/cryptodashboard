@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 export function DashboardRow(props: {
     content: CoinDetails;
     icons: IconSource[];
+    showSaved: boolean;
 }) {
     const [img, setImg] = useState("");
 
@@ -17,11 +18,15 @@ export function DashboardRow(props: {
                 (i) => i.symbol === props.content.symbol.toLowerCase()
             )
         ) {
-            setImg(props.icons.filter(
-                (i) => i.symbol === props.content.symbol.toLowerCase()
-            )[0].content)
+            setImg(
+                props.icons.filter(
+                    (i) => i.symbol === props.content.symbol.toLowerCase()
+                )[0].content
+            );
         } else {
-            setImg(props.icons.filter((i) => i.symbol === "generic")[0].content)
+            setImg(
+                props.icons.filter((i) => i.symbol === "generic")[0].content
+            );
         }
     });
     return (
@@ -69,14 +74,11 @@ export function DashboardRow(props: {
                     {Math.abs(props.content.changePercent24Hr).toFixed(2) + "%"}
                 </Link>
             </td>
-            <td className="py-3 px-2">
-                <SavedField id={props.content.id} />
-            </td>
+            {props.showSaved ? (
+                <td className="py-3 px-2">
+                    <SavedField id={props.content.id} />
+                </td>
+            ) : null}
         </>
     );
 }
-
-/*
-            
-
-*/

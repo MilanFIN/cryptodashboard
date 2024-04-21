@@ -1,8 +1,6 @@
 "use client";
-import {  useEffect, useState } from "react";
-import {
-    CoinDetails,
-} from "../actions/crypto";
+import { useEffect, useState } from "react";
+import { CoinDetails } from "../actions/crypto";
 import { DashboardRow } from "./DashboardRow";
 import { IconSource } from "../actions/images";
 
@@ -16,6 +14,7 @@ const tableHeaderColumns = ["#", "Name", "Price", "Market Cap", "Change 24h"];
 export default function DashboardTable(props: {
     items: CoinDetails[];
     icons: IconSource[];
+    showSaved: boolean;
 }) {
     const [items, setItems] = useState<CoinDetails[]>([]);
     const [currentSort, setCurrentSort] = useState<SortType>({
@@ -25,7 +24,7 @@ export default function DashboardTable(props: {
 
     useEffect(() => {
         setItems(props.items);
-    }, [])
+    }, []);
 
     function sortBy(col: number) {
         if (currentSort.col === col) {
@@ -77,19 +76,32 @@ export default function DashboardTable(props: {
                             onClick={() => sortBy(ind)}
                             key={"headercolumn_" + ind}
                         >
-                            {getSortArrow(ind)}
+                            <span className="text-sm mr-1">
+                                {getSortArrow(ind)}
+                            </span>
                             {i}
                         </td>
                     ))}
                 </tr>
             </thead>
-            <tbody className="divide-y divide-solid divide-y-2">
-                {items.map((i) => (
-                    <tr key={"contentrow_"+i.symbol}>
-                        <DashboardRow content={i} icons={props.icons} />
-                    </tr>
-                ))}
-            </tbody>
+            {items.length > 0 ? (
+                <tbody className="divide-y divide-solid divide-y-2">
+                    {items.map((i) => (
+                        <tr
+                            key={"contentrow_" + i.symbol}
+                            className="hover:bg-gray-100"
+                        >
+                            <DashboardRow
+                                content={i}
+                                icons={props.icons}
+                                showSaved={props.showSaved}
+                            />
+                        </tr>
+                    ))}
+                </tbody>
+            ) : (
+                <tbody></tbody>
+            )}
         </table>
     );
 }

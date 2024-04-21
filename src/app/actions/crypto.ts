@@ -28,24 +28,28 @@ export type PriceData = {
 };
 
 export async function getDashContent(page: number) {
+    if (isNaN(page)) {
+        return [];
+    }
     let response = await fetch(
         "https://api.coincap.io/v2/assets?offset=" + (page - 1) * 100
     );
     const assets = await response.json();
-    return assets.data.map((asset: any) => {
-        return {
-            id: asset.id,
-            rank: parseInt(asset.rank),
-            symbol: asset.symbol,
-            name: asset.name,
-            supply: parseFloat(asset.supply),
-            maxSupply: parseFloat(asset.maxSupply),
-            marketCapUsd: parseFloat(asset.marketCapUsd),
-            volumeUsd24Hr: parseFloat(asset.volumeUsd24Hr),
-            priceUsd: parseFloat(asset.priceUsd),
-            changePercent24Hr: parseFloat(asset.changePercent24Hr),
-        };
-    });
+        return assets.data.map((asset: any) => {
+            return {
+                id: asset.id,
+                rank: parseInt(asset.rank),
+                symbol: asset.symbol,
+                name: asset.name,
+                supply: parseFloat(asset.supply),
+                maxSupply: parseFloat(asset.maxSupply),
+                marketCapUsd: parseFloat(asset.marketCapUsd),
+                volumeUsd24Hr: parseFloat(asset.volumeUsd24Hr),
+                priceUsd: parseFloat(asset.priceUsd),
+                changePercent24Hr: parseFloat(asset.changePercent24Hr),
+            };
+        });
+
 }
 
 export async function getCoinDetails(id: string): Promise<CoinDetails> {

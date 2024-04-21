@@ -10,9 +10,12 @@ export default async function Dashboard(props: { page: number }) {
     const items = await getDashContent(props.page);
 
     return (
-        <div className="w-full grid justify-items-center">
+        <div className=" xl:w-[800px] w-full mt-4">
+            <h1 className="text-xl mb-2">All Cryptocurrencies</h1>
             <Suspense fallback={null}>
-                <DashboardTable items={items} icons={images} />
+                <div className="border-2 rounded-xl">
+                    <DashboardTable items={items} icons={images} showSaved={true}/>
+                </div>
             </Suspense>
         </div>
     );
