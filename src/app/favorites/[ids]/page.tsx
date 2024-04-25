@@ -4,11 +4,16 @@ import {
     getPriceHistory,
 } from "@/app/actions/crypto";
 import { getImages } from "@/app/actions/images";
+import { DashboardRow } from "@/app/components/DashboardRow";
 import DashboardTable from "@/app/components/DashboardTable";
 import Linechart from "@/app/components/Linechart";
 import { Suspense } from "react";
 
-export default async function SavedCoins({ params }: { params: { ids: string } }) {
+export default async function SavedCoins({
+    params,
+}: {
+    params: { ids: string };
+}) {
     const ids = params.ids.split("%2C").slice(0, 10);
     const values = (await getMultiple(ids)).sort((a, b) => a.rank - b.rank);
 

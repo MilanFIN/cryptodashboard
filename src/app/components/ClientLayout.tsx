@@ -1,3 +1,4 @@
+import CurrencyProvider from "../context/CurrencyContextProvider";
 import SavedProvider from "../context/LocalContextProvider";
 
 export default function ClientLayout({
@@ -6,8 +7,8 @@ export default function ClientLayout({
     children: React.ReactNode;
 }>) {
     return (
-		<SavedProvider>
-			{children}
-		</SavedProvider>
-);
+        <CurrencyProvider>
+            <SavedProvider>{children}</SavedProvider>
+        </CurrencyProvider>
+    );
 }

@@ -1,22 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
-import { CoinDetails } from "../actions/crypto";
+import { CoinDetails, Exchange } from "../actions/crypto";
 import { DashboardRow } from "./DashboardRow";
 import { IconSource } from "../actions/images";
+import Link from "next/link";
 
 type SortType = {
     col: number;
     ascending: boolean;
 };
 
-const columnHeaders = ["#", "Name", "Price", "Market Cap", "Change 24h"];
+const columnHeaders = ["#", "Name", "Share %", "Volume", "Currencies"];
 
-export default function DashboardTable(props: {
-    items: CoinDetails[];
-    icons: IconSource[];
-    showSaved: boolean;
-}) {
-    const [items, setItems] = useState<CoinDetails[]>([]);
+export default function ExchangesTable(props: { items: Exchange[] }) {
+    const [items, setItems] = useState<Exchange[]>([]);
     const [currentSort, setCurrentSort] = useState<SortType>({
         col: 0,
         ascending: true,
@@ -41,17 +38,13 @@ export default function DashboardTable(props: {
         } else if (col === 1) {
             setItems(items.toSorted((a, b) => a.name.localeCompare(b.name)));
         } else if (col === 2) {
-            setItems(items.toSorted((a, b) => b.priceUsd - a.priceUsd));
+            setItems(items.toSorted((a, b) => b.share - a.share));
             newSortType.ascending = false;
         } else if (col === 3) {
-            setItems(items.toSorted((a, b) => b.marketCapUsd - a.marketCapUsd));
+            setItems(items.toSorted((a, b) => b.volume - a.volume));
             newSortType.ascending = false;
         } else if (col === 4) {
-            setItems(
-                items.toSorted(
-                    (a, b) => b.changePercent24Hr - a.changePercent24Hr
-                )
-            );
+            setItems(items.toSorted((a, b) => b.currencies - a.currencies));
             newSortType.ascending = false;
         }
 
@@ -88,14 +81,36 @@ export default function DashboardTable(props: {
                 <tbody className="divide-y divide-solid divide-y-2">
                     {items.map((i) => (
                         <tr
-                            key={"contentrow_" + i.symbol}
+                            key={"exchangerow_" + i.rank}
                             className="hover:bg-gray-100"
                         >
-                            <DashboardRow
-                                content={i}
-                                icons={props.icons}
-                                showSaved={props.showSaved}
-                            />
+                            <td className="py-3 px-2 cursor-pointer">
+                                <Link href={i.href} target="_blank">
+                                    {i.rank}
+                                </Link>
+                            </td>
+                            <td className="py-3 px-2 cursor-pointer">
+                                <Link href={i.href} target="_blank">
+                                    {i.name}
+                                </Link>
+                            </td>
+                            <td className="py-3 px-2 cursor-pointer">
+                                <Link href={i.href} target="_blank">
+                                    {i.share.toFixed(2)}
+                                </Link>
+                            </td>{" "}
+                            <td className="py-3 px-2 cursor-pointer">
+                                <Link href={i.href} target="_blank">
+                                    {!isNaN(i.volume)
+                                        ? "$" + i.volume.toFixed(2)
+                                        : "?"}
+                                </Link>
+                            </td>
+                            <td className="py-3 px-2 cursor-pointer">
+                                <Link href={i.href} target="_blank">
+                                    {!isNaN(i.currencies) ? i.currencies : "?"}
+                                </Link>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

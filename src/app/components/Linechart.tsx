@@ -44,6 +44,8 @@ export default function Linechart(props: { data: PriceData[] }) {
     const green =
         props.data[props.data.length - 1].price >= props.data[0].price;
 
+
+
     const chartData = {
         labels: props.data.map((i) => i.date),
         datasets: [
@@ -53,7 +55,7 @@ export default function Linechart(props: { data: PriceData[] }) {
                 borderColor: green ? "#00ff00" : "#ff0000",
                 fill: {
                     target: "origin",
-                    above: green ? "#00ff0060" : "#ff000060", // Area will be red above the origin
+                    above: green ? "#00ff0060" : "#ff000060",
                 },
                 data: props.data.map((i) => i.price),
             },

@@ -1,5 +1,7 @@
 "use server";
 
+import { ReactNode } from "react";
+
 export type DashboardRowContent = {
     id: string;
     rank: string;
@@ -22,12 +24,42 @@ export type CoinDetails = {
     changePercent24Hr: number;
 };
 
+export type Market = {
+    exchangeId: string;
+    baseId: string;
+    quoteId: string;
+    baseSymbol: string;
+    quoteSymbol: string;
+    volumeUsd24Hr: number;
+    priceUsd: number;
+    volumePercent: number;
+};
+
+export type Exchange = {
+    name: string;
+    rank: number;
+    share: number;
+    href: string;
+    volume: number;
+    currencies: number;
+};
+
 export type PriceData = {
     date: string;
     price: number;
 };
 
-export async function getDashContent(page: number) {
+export type Rate = {
+    name: string;
+    symbol: string;
+    rate: number;
+};
+
+function getDistinctValues(strings: string[]): string[] {
+    return [...new Set(strings)];
+}
+
+export async function getDashContent(page: number): Promise<CoinDetails[]> {
     if (isNaN(page)) {
         return [];
     }
@@ -35,21 +67,20 @@ export async function getDashContent(page: number) {
         "https://api.coincap.io/v2/assets?offset=" + (page - 1) * 100
     );
     const assets = await response.json();
-        return assets.data.map((asset: any) => {
-            return {
-                id: asset.id,
-                rank: parseInt(asset.rank),
-                symbol: asset.symbol,
-                name: asset.name,
-                supply: parseFloat(asset.supply),
-                maxSupply: parseFloat(asset.maxSupply),
-                marketCapUsd: parseFloat(asset.marketCapUsd),
-                volumeUsd24Hr: parseFloat(asset.volumeUsd24Hr),
-                priceUsd: parseFloat(asset.priceUsd),
-                changePercent24Hr: parseFloat(asset.changePercent24Hr),
-            };
-        });
-
+    return assets.data.map((asset: any) => {
+        return {
+            id: asset.id,
+            rank: parseInt(asset.rank),
+            symbol: asset.symbol,
+            name: asset.name,
+            supply: parseFloat(asset.supply),
+            maxSupply: parseFloat(asset.maxSupply),
+            marketCapUsd: parseFloat(asset.marketCapUsd),
+            volumeUsd24Hr: parseFloat(asset.volumeUsd24Hr),
+            priceUsd: parseFloat(asset.priceUsd),
+            changePercent24Hr: parseFloat(asset.changePercent24Hr),
+        };
+    });
 }
 
 export async function getCoinDetails(id: string): Promise<CoinDetails> {
@@ -68,6 +99,18 @@ export async function getCoinDetails(id: string): Promise<CoinDetails> {
         changePercent24Hr: parseFloat(asset.changePercent24Hr),
     };
     return details;
+}
+
+export async function getCoinMarkets(id: string): Promise<string[]> {
+    let response = await fetch(
+        `https://api.coincap.io/v2/assets/${id}/markets`
+    );
+    const assets = await response.json();
+    return getDistinctValues(
+        assets.data.map((asset: any) => {
+            return asset.exchangeId;
+        })
+    );
 }
 
 export async function getMultiple(ids: string[]): Promise<CoinDetails[]> {
@@ -125,4 +168,32 @@ export async function getPriceHistory(
         (i: any) =>
             ({ date: i.date, price: parseFloat(i.priceUsd) } as PriceData)
     );
+}
+
+export async function getExchanges(): Promise<Exchange[]> {
+    let response = await fetch(`https://api.coincap.io/v2/exchanges`);
+    const ex = await response.json();
+    return ex.data.map((ex: any) => {
+        const share = parseFloat(ex.percentTotalVolume);
+        return {
+            name: ex.name,
+            rank: ex.rank,
+            share: !isNaN(share) ? share : 0,
+            href: ex.exchangeUrl,
+            volume: parseFloat(ex.volumeUsd),
+            currencies: parseInt(ex.tradingPairs),
+        };
+    });
+}
+
+export async function getRates(): Promise<Rate[]> {
+    let response = await fetch(`https://api.coincap.io/v2/rates`);
+    const rates = await response.json();
+    return rates.data.map((r: any) => {
+        return {
+            name: r.symbol,
+            symbol: r.currencySymbol,
+            rate: parseFloat(r.rateUsd),
+        };
+    });
 }

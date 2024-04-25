@@ -1,11 +1,18 @@
-import { getCoinDetails, getPriceHistory } from "@/app/actions/crypto";
+import {
+    getCoinDetails,
+    getCoinMarkets,
+    getPriceHistory,
+} from "@/app/actions/crypto";
 import { getImages } from "@/app/actions/images";
+import CoinInfo from "@/app/components/CoinInfo";
+import CoinMarketsTable from "@/app/components/CoinMarketsTable";
 import GraphView from "@/app/components/GraphView";
 import Linechart from "@/app/components/Linechart";
 import { Suspense } from "react";
 
 export default async function Coin({ params }: { params: { id: string } }) {
     const details = await getCoinDetails(params.id);
+    const markets = await getCoinMarkets(params.id);
     const images = await getImages();
     const initialPriceHistory = await getPriceHistory(params.id, "1m");
 
@@ -17,59 +24,31 @@ export default async function Coin({ params }: { params: { id: string } }) {
     }
 
     return (
-        <main className=" min-h-screen xl:w-[800px] w-full mt-4">
-            <div className="flex flex-wrap w-full">
-                <div className="">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td className="flex">
-                                    <img
-                                        src={`data:image/svg+xml;base64,${btoa(
-                                            img
-                                        )}`}
-                                        width="25"
-                                        height="25"
-                                        className="mr-2"
-                                    ></img>
-                                    <span className="font-bold mr-2">
-                                        {details.name}
-                                    </span>
-                                    {details.symbol}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Rank: </td>
-                                <td>{details.rank}</td>
-                            </tr>
-                            <tr>
-                                <td>Price:</td>
-                                <td>${details.priceUsd.toFixed(2)}</td>
-                            </tr>
-                            <tr>
-                                <td>Market Cap:</td>
-                                <td>${details.marketCapUsd.toFixed(2)}</td>
-                            </tr>
-                            <tr>
-                                <td>Fully Diluted valuation:</td>
-                                <td>${(details.marketCapUsd * details.maxSupply/details.supply).toFixed(2)}</td>
-                            </tr>
-                            <tr>
-                                <td>Supply: </td>
-                                <td>{details.supply}</td>
-                            </tr>
-                            <tr>
-                                <td>Total Supply: </td>
-                                <td>{details.maxSupply}</td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-                <Suspense fallback={<div>LOADING</div>}>
-                    <GraphView id={params.id} initial={initialPriceHistory} />
-                </Suspense>
+        <main className=" min-h-screen xl:w-[800px] w-full mt-2 px-2">
+            <div className="flex m-2">
+                <img
+                    src={`data:image/svg+xml;base64,${btoa(img)}`}
+                    width="32"
+                    height="32"
+                    className="mr-2"
+                ></img>
+                <span className="font-bold mr-2 text-2xl">{details.name}</span>
+                <span className="text-xl ">{details.symbol}</span>
             </div>
+
+            <div className="flex w-full">
+                <div className="w-fit m-1">
+                    <CoinInfo img={img} details={details} />
+                </div>
+                <div className="m-1">
+                    <Suspense fallback={null}>
+                        <CoinMarketsTable markets={markets} />
+                    </Suspense>
+                </div>
+            </div>
+            <Suspense fallback={<div>LOADING</div>}>
+                <GraphView id={params.id} initial={initialPriceHistory} />
+            </Suspense>
         </main>
     );
 }

@@ -4,12 +4,18 @@ import { CoinDetails, DashboardRowContent } from "../actions/crypto";
 import { SavedField } from "./Savedfield";
 import { IconSource } from "../actions/images";
 import { useEffect, useState } from "react";
+import {
+    CurrencyContextType,
+    useCurrencyContext,
+} from "../context/CurrencyContextProvider";
 
 export function DashboardRow(props: {
     content: CoinDetails;
     icons: IconSource[];
     showSaved: boolean;
 }) {
+    const { sanitizeCurrency } = useCurrencyContext() as CurrencyContextType;
+
     const [img, setImg] = useState("");
 
     useEffect(() => {
@@ -29,6 +35,8 @@ export function DashboardRow(props: {
             );
         }
     });
+
+
     return (
         <>
             <td className="py-3 px-2">
@@ -36,7 +44,9 @@ export function DashboardRow(props: {
                     {props.content.rank}
                 </Link>
             </td>
-            <td className="py-3 px-2">
+            <td className="py-3 px-2 flex ">
+                {props.showSaved ? <SavedField id={props.content.id} /> : null}
+
                 <Link
                     href={"/coin/" + props.content.id}
                     className="flex flex-wrap"
@@ -55,12 +65,12 @@ export function DashboardRow(props: {
             </td>
             <td className="py-3 px-2">
                 <Link href={"/coin/" + props.content.id}>
-                    ${props.content.priceUsd.toFixed(2)}
+                    ${sanitizeCurrency(props.content.priceUsd).toFixed(2)}
                 </Link>
             </td>
             <td className="py-3 px-2">
                 <Link href={"/coin/" + props.content.id}>
-                    ${props.content.marketCapUsd.toFixed(0)}
+                    ${sanitizeCurrency(props.content.marketCapUsd).toFixed(0)}
                 </Link>
             </td>
             <td
@@ -74,11 +84,6 @@ export function DashboardRow(props: {
                     {Math.abs(props.content.changePercent24Hr).toFixed(2) + "%"}
                 </Link>
             </td>
-            {props.showSaved ? (
-                <td className="py-3 px-2">
-                    <SavedField id={props.content.id} />
-                </td>
-            ) : null}
         </>
     );
 }
