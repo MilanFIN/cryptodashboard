@@ -9,6 +9,8 @@ import CoinMarketsTable from "@/app/components/CoinMarketsTable";
 import GraphView from "@/app/components/GraphView";
 import Linechart from "@/app/components/Linechart";
 import { Suspense } from "react";
+import Image from "next/image";
+
 
 export default async function Coin({ params }: { params: { id: string } }) {
     const details = await getCoinDetails(params.id);
@@ -26,14 +28,15 @@ export default async function Coin({ params }: { params: { id: string } }) {
     return (
         <main className=" min-h-screen xl:w-[800px] w-full mt-2 px-2">
             <div className="flex m-2">
-                <img
+                <Image
                     src={`data:image/svg+xml;base64,${btoa(img)}`}
                     width="32"
                     height="32"
                     className="mr-2"
-                ></img>
-                <span className="font-bold mr-2 text-2xl">{details.name}</span>
-                <span className="text-xl ">{details.symbol}</span>
+                    alt="Currency icon"
+                ></Image>
+                <span className="font-bold mr-2 text-2xl my-auto">{details.name}</span>
+                <span className="text-xl my-auto">{details.symbol}</span>
             </div>
 
             <div className="flex w-full">

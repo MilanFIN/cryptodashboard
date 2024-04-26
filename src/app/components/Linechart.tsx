@@ -16,6 +16,7 @@ import {
     Legend,
     Filler,
 } from "chart.js";
+import { CurrencyContextType, useCurrencyContext } from "../context/CurrencyContextProvider";
 
 ChartJS.register(
     CategoryScale,
@@ -41,6 +42,12 @@ export default function Linechart(props: { data: PriceData[] }) {
     if (props.data.length == 0) {
         return null;
     }
+
+
+    const { sanitizeCurrency, currencySymbol } =
+    useCurrencyContext() as CurrencyContextType;
+
+
     const green =
         props.data[props.data.length - 1].price >= props.data[0].price;
 
@@ -93,9 +100,9 @@ export default function Linechart(props: { data: PriceData[] }) {
                         bodyColor: "black",
                         callbacks: {
                             label: function (context) {
-                                let value = context.parsed.y.toFixed(2);
+                                let value = sanitizeCurrency(context.parsed.y).toFixed(2);
 
-                                return value;
+                                return currencySymbol + " " + value;
                             },
                             title: function (context) {
                                 let title = context[0].label;
@@ -137,12 +144,12 @@ export default function Linechart(props: { data: PriceData[] }) {
                     y: {
                         ticks: {
                             callback: function (value: any, index, ticks) {
-                                return value.toLocaleString();
+                                return sanitizeCurrency(value).toLocaleString();
                             },
                         },
                         title: {
                             display: true,
-                            text: "$",
+                            text: currencySymbol,
                         },
                     },
                 },

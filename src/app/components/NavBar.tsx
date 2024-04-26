@@ -4,6 +4,7 @@ import SavedProvider from "../context/LocalContextProvider";
 import Link from "next/link";
 import SavedLink from "./SavedLink";
 import { CurrencyContext, CurrencyContextType, useCurrencyContext } from "../context/CurrencyContextProvider";
+import CurrencySelector from "./CurrencySelector";
 
 export default function NavBar(props: {}) {
     const {currency, currencies, setCurrency } = useCurrencyContext() as CurrencyContextType;
@@ -17,11 +18,9 @@ export default function NavBar(props: {}) {
                 <Link href="/about">About</Link>
                 <span className="grow"></span>
 
-                {currencies.map((c, ind) => (
-                    <span key={"CURR_"+c} onClick={() => setCurrency(ind)}>{c}</span>
-                ))}
+                <CurrencySelector selected={currency} currencies={currencies} setCurrency={setCurrency}/>
 
-                <span>Currency: {currency}</span>
+
             </div>
         </div>
     );

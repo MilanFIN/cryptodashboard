@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from 'next/image'
 import { CoinDetails, DashboardRowContent } from "../actions/crypto";
 import { SavedField } from "./Savedfield";
 import { IconSource } from "../actions/images";
@@ -14,7 +15,8 @@ export function DashboardRow(props: {
     icons: IconSource[];
     showSaved: boolean;
 }) {
-    const { sanitizeCurrency } = useCurrencyContext() as CurrencyContextType;
+    const { sanitizeCurrency, currencySymbol } =
+        useCurrencyContext() as CurrencyContextType;
 
     const [img, setImg] = useState("");
 
@@ -36,7 +38,6 @@ export function DashboardRow(props: {
         }
     });
 
-
     return (
         <>
             <td className="py-3 px-2">
@@ -51,12 +52,13 @@ export function DashboardRow(props: {
                     href={"/coin/" + props.content.id}
                     className="flex flex-wrap"
                 >
-                    <img
+                    <Image
                         src={`data:image/svg+xml;base64,${btoa(img)}`}
                         width="25"
                         height="25"
                         className="mr-2"
-                    ></img>
+                        alt="Currency icon"
+                    ></Image>
                     <span className="font-bold mr-2">
                         {props.content.name}{" "}
                     </span>
@@ -65,12 +67,14 @@ export function DashboardRow(props: {
             </td>
             <td className="py-3 px-2">
                 <Link href={"/coin/" + props.content.id}>
-                    ${sanitizeCurrency(props.content.priceUsd).toFixed(2)}
+                    {currencySymbol}
+                    {sanitizeCurrency(props.content.priceUsd).toFixed(2)}
                 </Link>
             </td>
             <td className="py-3 px-2">
                 <Link href={"/coin/" + props.content.id}>
-                    ${sanitizeCurrency(props.content.marketCapUsd).toFixed(0)}
+                    {currencySymbol}
+                    {sanitizeCurrency(props.content.marketCapUsd).toFixed(0)}
                 </Link>
             </td>
             <td

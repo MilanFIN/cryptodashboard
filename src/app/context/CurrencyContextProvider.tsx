@@ -1,14 +1,14 @@
 "use client";
-
 import React, { useContext, useState } from "react";
 import useLocalStorage from "../hooks/UseLocalStorage";
-import { getRates } from "../actions/crypto";
+import { Rate } from "../actions/crypto";
 
 export type CurrencyContextType = {
     currency: string;
     currencies: string[];
     setCurrency: (f: number) => void;
     sanitizeCurrency: (v: number) => number;
+    currencySymbol: string;
 };
 
 export const CurrencyContext = React.createContext<CurrencyContextType | null>(
@@ -16,35 +16,46 @@ export const CurrencyContext = React.createContext<CurrencyContextType | null>(
 );
 export const useCurrencyContext = () => useContext(CurrencyContext);
 
-const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({
-    children,
-}) => {
+function CurrencyProvider(props: { children: React.ReactNode; rates: Rate[] }) {
+    const currencies = props.rates.map((i) => i.name);
 
-    //const cs = await getRates();
-    const currencies = ["usd", "euro"];
-    const multipliers = [1, 0.5];
+    const usdIndex = props.rates.findIndex(
+        (i) => i.id === "united-states-dollar"
+    );
+
+    const [activeCurrency, setActiveCurrency] = useState<number>(usdIndex);
 
     //const [saved, setSaved] = useLocalStorage("saved", new Array<string>());
-    const [currency, setCurrencyState] = useState<string>(currencies[0]);
-
-    const [multiplier, setMultiplier] = useState(multipliers[0]);
+    const [currency, setCurrencyState] = useState<string>(
+        props.rates[usdIndex].name
+    );
+    const [currencySymbol, setCurrencySymbol] = useState<string>(
+        props.rates[usdIndex].symbol
+    );
 
     function setCurrency(c: number) {
-        setCurrencyState(currencies[c]);
-        setMultiplier(multipliers[c]);
+        setCurrencyState(props.rates[c].name);
+        setActiveCurrency(c);
+        setCurrencySymbol(props.rates[c].symbol);
     }
 
     function sanitizeCurrency(v: number) {
-        return multiplier * v;
+        return v / props.rates[activeCurrency].rate;
     }
 
     return (
         <CurrencyContext.Provider
-            value={{ currency, currencies, setCurrency, sanitizeCurrency }}
+            value={{
+                currency,
+                currencies,
+                setCurrency,
+                sanitizeCurrency,
+                currencySymbol,
+            }}
         >
-            {children}
+            {props.children}
         </CurrencyContext.Provider>
     );
-};
+}
 
 export default CurrencyProvider;

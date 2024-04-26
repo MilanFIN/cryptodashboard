@@ -50,10 +50,20 @@ export type PriceData = {
 };
 
 export type Rate = {
+    id: string;
     name: string;
     symbol: string;
     rate: number;
 };
+
+const includedCurrencies = [
+    "united-states-dollar",
+    "euro",
+    "british-pound-sterling",
+    "japanese-yen",
+    "swedish-krona",
+    "bitcoin",
+];
 
 function getDistinctValues(strings: string[]): string[] {
     return [...new Set(strings)];
@@ -173,11 +183,12 @@ export async function getPriceHistory(
 export async function getExchanges(): Promise<Exchange[]> {
     let response = await fetch(`https://api.coincap.io/v2/exchanges`);
     const ex = await response.json();
+
     return ex.data.map((ex: any) => {
         const share = parseFloat(ex.percentTotalVolume);
         return {
             name: ex.name,
-            rank: ex.rank,
+            rank: parseInt(ex.rank),
             share: !isNaN(share) ? share : 0,
             href: ex.exchangeUrl,
             volume: parseFloat(ex.volumeUsd),
@@ -189,11 +200,21 @@ export async function getExchanges(): Promise<Exchange[]> {
 export async function getRates(): Promise<Rate[]> {
     let response = await fetch(`https://api.coincap.io/v2/rates`);
     const rates = await response.json();
-    return rates.data.map((r: any) => {
-        return {
-            name: r.symbol,
-            symbol: r.currencySymbol,
-            rate: parseFloat(r.rateUsd),
-        };
+    let filteredRates = rates.data
+        .map((r: any) => {
+            return {
+                id: r.id,
+                name: r.symbol,
+                symbol: r.currencySymbol,
+                rate: parseFloat(r.rateUsd),
+            };
+        })
+        .filter((i: Rate) => includedCurrencies.includes(i.id));
+
+    filteredRates.sort((a: Rate, b: Rate) => {
+        var iA = includedCurrencies.indexOf(a.id);
+        var iB = includedCurrencies.indexOf(b.id);
+        return iA - iB;
     });
+    return filteredRates;
 }

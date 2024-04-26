@@ -1,4 +1,9 @@
+"use client";
 import { CoinDetails, Market } from "../actions/crypto";
+import {
+    CurrencyContextType,
+    useCurrencyContext,
+} from "../context/CurrencyContextProvider";
 import SavedProvider, {
     SavedContext,
     SavedContextType,
@@ -7,6 +12,9 @@ import SavedProvider, {
 import Link from "next/link";
 
 export default function CoinInfo(props: { details: CoinDetails; img: string }) {
+    const { sanitizeCurrency, currencySymbol } =
+        useCurrencyContext() as CurrencyContextType;
+
     return (
         <div className="border-2 rounded-md p-4 w-full">
             <table>
@@ -18,7 +26,10 @@ export default function CoinInfo(props: { details: CoinDetails; img: string }) {
                     <tr>
                         <td>Price:</td>
                         <td className="text-right">
-                            ${props.details.priceUsd.toFixed(2)}
+                            {currencySymbol}
+                            {sanitizeCurrency(props.details.priceUsd).toFixed(
+                                2
+                            )}
                             <span
                                 className={`ml-2 ${
                                     props.details.changePercent24Hr < 0
@@ -33,18 +44,23 @@ export default function CoinInfo(props: { details: CoinDetails; img: string }) {
                     <tr>
                         <td>Market Cap:</td>
                         <td className="text-right">
-                            ${props.details.marketCapUsd.toFixed(2)}
+                            {currencySymbol}
+                            {sanitizeCurrency(
+                                props.details.marketCapUsd
+                            ).toFixed(2)}
                         </td>
                     </tr>
                     <tr>
                         <td className="pr-4">Diluted valuation:</td>
                         <td className="text-right">
-                            
-                            {!isNaN(props.details.maxSupply) ? "$"+(
-                                (props.details.marketCapUsd *
-                                    props.details.maxSupply) /
-                                props.details.supply
-                            ).toFixed(2) : "?"}
+                            {!isNaN(props.details.maxSupply)
+                                ? `${currencySymbol} 
+                                    ${sanitizeCurrency(
+                                        (props.details.marketCapUsd *
+                                            props.details.maxSupply) /
+                                            props.details.supply
+                                    ).toFixed(2)}`
+                                : "?"}
                         </td>
                     </tr>
                     <tr>
