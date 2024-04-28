@@ -4,6 +4,7 @@ import CurrencyProvider, {
     CurrencyContextType,
     useCurrencyContext,
 } from "../context/CurrencyContextProvider";
+import { formatNumber } from "../utils/common";
 
 export default function ExchangeHeader(props: { exchanges: Exchange[] }) {
     const { sanitizeCurrency, currencySymbol } =
@@ -15,9 +16,9 @@ export default function ExchangeHeader(props: { exchanges: Exchange[] }) {
     }, 0);
 
     return (
-        <div className="flex flex-wrap my-auto">
-            <div className="mr-2 bg-gray-200 rounded-md">Total Volume: {currencySymbol}{sanitizeCurrency(volume).toFixed(2)}</div>
-			<div className="bg-gray-200 rounded-md">Exchanges: {props.exchanges.length}</div>
+        <div className="flex flex-wrap my-auto mt-2">
+            <div className="mr-2 bg-gray-200 rounded-md p-1">Total Volume: {currencySymbol}{formatNumber(sanitizeCurrency(volume))}</div>
+			<div className="bg-gray-200 rounded-md p-1">Exchanges: {props.exchanges.length}</div>
         </div>
     );
 }

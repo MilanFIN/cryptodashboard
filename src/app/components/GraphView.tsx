@@ -21,10 +21,13 @@ export default function GraphView(props: {id: string,  initial: PriceData[] }) {
 
     return (
         <div className="w-full">
+            <div className="w-full flex justify-end">
             <span>Resolution</span>
             <button className={`${s == "1d" ? "bg-gray-400" : "bg-gray-200"} hover:bg-gray-300 w-10 rounded-sm mr-2`} onClick={() => updateSpan("1d")}>1d</button>
             <button className={`${s == "1m" ? "bg-gray-400" : "bg-gray-200"} hover:bg-gray-300 w-10 rounded-sm mr-2`} onClick={() => updateSpan("1m")}>1m</button>
             <button className={`${s == "3m" ? "bg-gray-400" : "bg-gray-200"} hover:bg-gray-300 w-10 rounded-sm mr-2`} onClick={() => updateSpan("3m")}>3m</button>
+
+            </div>
 
             <Linechart data={data} />
         </div>

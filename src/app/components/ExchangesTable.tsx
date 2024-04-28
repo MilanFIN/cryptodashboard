@@ -4,6 +4,7 @@ import { CoinDetails, Exchange } from "../actions/crypto";
 import { DashboardRow } from "./DashboardRow";
 import { IconSource } from "../actions/images";
 import Link from "next/link";
+import { formatNumber } from "../utils/common";
 
 type SortType = {
     col: number;
@@ -102,7 +103,7 @@ export default function ExchangesTable(props: { items: Exchange[] }) {
                             <td className="py-3 px-2 cursor-pointer">
                                 <Link href={i.href} target="_blank">
                                     {!isNaN(i.volume)
-                                        ? "$" + i.volume.toFixed(2)
+                                        ? "$" + formatNumber(i.volume)
                                         : "?"}
                                 </Link>
                             </td>

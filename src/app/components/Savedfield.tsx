@@ -4,7 +4,7 @@ import {
 } from "../context/LocalContextProvider";
 import { useContext, useEffect } from "react";
 import { cookies } from "next/headers";
-import {heartEmpty, heartFilled} from "@/app/icons/heart"
+import {heartEmpty, heartFilled} from "@/app/icons/icons"
 
 export function SavedField(props: { id: string }) {
     const { saved, addSaved, removeSaved } =

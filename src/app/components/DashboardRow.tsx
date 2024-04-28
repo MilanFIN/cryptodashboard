@@ -9,6 +9,7 @@ import {
     CurrencyContextType,
     useCurrencyContext,
 } from "../context/CurrencyContextProvider";
+import { formatNumber } from "../utils/common";
 
 export function DashboardRow(props: {
     content: CoinDetails;
@@ -68,13 +69,13 @@ export function DashboardRow(props: {
             <td className="py-3 px-2">
                 <Link href={"/coin/" + props.content.id}>
                     {currencySymbol}
-                    {sanitizeCurrency(props.content.priceUsd).toFixed(2)}
+                    {formatNumber(sanitizeCurrency(props.content.priceUsd))}
                 </Link>
             </td>
             <td className="py-3 px-2">
                 <Link href={"/coin/" + props.content.id}>
                     {currencySymbol}
-                    {sanitizeCurrency(props.content.marketCapUsd).toFixed(0)}
+                    {formatNumber(sanitizeCurrency(props.content.marketCapUsd))}
                 </Link>
             </td>
             <td

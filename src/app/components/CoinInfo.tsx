@@ -10,6 +10,8 @@ import SavedProvider, {
     useSavedContext,
 } from "../context/LocalContextProvider";
 import Link from "next/link";
+import { formatNumber } from "../utils/common";
+import { InfoBox } from "./InfoBox";
 
 export default function CoinInfo(props: { details: CoinDetails; img: string }) {
     const { sanitizeCurrency, currencySymbol } =
@@ -27,8 +29,8 @@ export default function CoinInfo(props: { details: CoinDetails; img: string }) {
                         <td>Price:</td>
                         <td className="text-right">
                             {currencySymbol}
-                            {sanitizeCurrency(props.details.priceUsd).toFixed(
-                                2
+                            {formatNumber(
+                                sanitizeCurrency(props.details.priceUsd)
                             )}
                             <span
                                 className={`ml-2 ${
@@ -45,9 +47,9 @@ export default function CoinInfo(props: { details: CoinDetails; img: string }) {
                         <td>Market Cap:</td>
                         <td className="text-right">
                             {currencySymbol}
-                            {sanitizeCurrency(
-                                props.details.marketCapUsd
-                            ).toFixed(2)}
+                            {formatNumber(
+                                sanitizeCurrency(props.details.marketCapUsd)
+                            )}
                         </td>
                     </tr>
                     <tr>
@@ -55,11 +57,13 @@ export default function CoinInfo(props: { details: CoinDetails; img: string }) {
                         <td className="text-right">
                             {!isNaN(props.details.maxSupply)
                                 ? `${currencySymbol} 
-                                    ${sanitizeCurrency(
-                                        (props.details.marketCapUsd *
-                                            props.details.maxSupply) /
-                                            props.details.supply
-                                    ).toFixed(2)}`
+                                    ${formatNumber(
+                                        sanitizeCurrency(
+                                            (props.details.marketCapUsd *
+                                                props.details.maxSupply) /
+                                                props.details.supply
+                                        )
+                                    )}`
                                 : "?"}
                         </td>
                     </tr>
@@ -67,15 +71,20 @@ export default function CoinInfo(props: { details: CoinDetails; img: string }) {
                         <td>Supply: </td>
                         <td className="text-right">
                             {!isNaN(props.details.supply)
-                                ? props.details.supply
+                                ? formatNumber(props.details.supply)
                                 : "?"}
                         </td>
                     </tr>
                     <tr>
-                        <td>Total Supply: </td>
+                        <td className="flex flex-wrap">
+                            Total Supply:
+                            <InfoBox>
+                                <span>The total amount of coins that will be minted</span>
+                            </InfoBox>
+                        </td>
                         <td className="text-right">
                             {!isNaN(props.details.maxSupply)
-                                ? props.details.maxSupply
+                                ? formatNumber(props.details.maxSupply)
                                 : "?"}
                         </td>
                     </tr>

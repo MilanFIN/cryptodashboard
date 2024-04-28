@@ -8,7 +8,7 @@ export default async function Exchanges() {
 
     return (
         <main className=" xl:w-[800px] w-full mt-4">
-            <div className="flex flex-wrap mb-2">
+            <div className=" mb-2">
             <h1 className="text-xl mr-4">Exchanges</h1>
             <ExchangeHeader exchanges={exchanges} />
 
