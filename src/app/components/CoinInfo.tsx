@@ -53,7 +53,14 @@ export default function CoinInfo(props: { details: CoinDetails; img: string }) {
                         </td>
                     </tr>
                     <tr>
-                        <td className="pr-4">Diluted valuation:</td>
+                        <td className="pr-4 flex flex-wrap">
+                            Diluted valuation:
+                            <InfoBox>
+                                <span>
+                                    Estimated market cap, if total supply was accounted for.
+                                </span>
+                            </InfoBox>
+                        </td>
                         <td className="text-right">
                             {!isNaN(props.details.maxSupply)
                                 ? `${currencySymbol} 
@@ -68,7 +75,14 @@ export default function CoinInfo(props: { details: CoinDetails; img: string }) {
                         </td>
                     </tr>
                     <tr>
-                        <td>Supply: </td>
+                        <td className="flex flex-wrap">
+                            Supply:
+                            <InfoBox>
+                                <span>
+                                    The amount of coins that have been minted
+                                </span>
+                            </InfoBox>
+                        </td>
                         <td className="text-right">
                             {!isNaN(props.details.supply)
                                 ? formatNumber(props.details.supply)
@@ -79,7 +93,10 @@ export default function CoinInfo(props: { details: CoinDetails; img: string }) {
                         <td className="flex flex-wrap">
                             Total Supply:
                             <InfoBox>
-                                <span>The total amount of coins that will be minted</span>
+                                <span>
+                                    The total amount of coins that will be
+                                    minted
+                                </span>
                             </InfoBox>
                         </td>
                         <td className="text-right">

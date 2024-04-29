@@ -5,13 +5,31 @@ import { DashboardRow } from "./DashboardRow";
 import { IconSource } from "../actions/images";
 import Link from "next/link";
 import { formatNumber } from "../utils/common";
+import { InfoBox } from "./InfoBox";
 
 type SortType = {
     col: number;
     ascending: boolean;
 };
 
-const columnHeaders = ["#", "Name", "Share %", "Volume", "Currencies"];
+const columnHeaders = [
+    <span>#</span>,
+    <span>Name</span>,
+    <span className="flex flex-wrap">
+        Share %
+        <InfoBox>Share of total trading volume during the last 24h</InfoBox>
+    </span>,
+    <span className="flex flex-wrap">
+        Volume
+        <InfoBox>Total trading volume during the last 24h</InfoBox>
+    </span>,
+    <span className="flex flex-wrap">
+        Currencies
+        <InfoBox>
+            The amount of crypto-fiat pairs listed in the exchange
+        </InfoBox>
+    </span>,
+];
 
 export default function ExchangesTable(props: { items: Exchange[] }) {
     const [items, setItems] = useState<Exchange[]>([]);
@@ -64,16 +82,18 @@ export default function ExchangesTable(props: { items: Exchange[] }) {
         <table className="w-full">
             <thead className="border-b-2">
                 <tr>
-                    {columnHeaders.map((i: string, ind: number) => (
+                    {columnHeaders.map((i: React.ReactNode, ind: number) => (
                         <td
                             className="py-3 px-2 cursor-pointer"
                             onClick={() => sortBy(ind)}
                             key={"headercolumn_" + ind}
                         >
-                            <span className="text-sm mr-1">
-                                {getSortArrow(ind)}
+                            <span className="flex">
+                                <span className="text-sm mr-1">
+                                    {getSortArrow(ind)}
+                                </span>
+                                {i}
                             </span>
-                            {i}
                         </td>
                     ))}
                 </tr>
@@ -85,29 +105,29 @@ export default function ExchangesTable(props: { items: Exchange[] }) {
                             key={"exchangerow_" + i.rank}
                             className="hover:bg-gray-100"
                         >
-                            <td className="py-3 px-2 cursor-pointer">
+                            <td className="py-3 px-2">
                                 <Link href={i.href} target="_blank">
                                     {i.rank}
                                 </Link>
                             </td>
-                            <td className="py-3 px-2 cursor-pointer">
+                            <td className="py-3 px-2">
                                 <Link href={i.href} target="_blank">
                                     {i.name}
                                 </Link>
                             </td>
-                            <td className="py-3 px-2 cursor-pointer">
+                            <td className="py-3 px-2">
                                 <Link href={i.href} target="_blank">
                                     {i.share.toFixed(2)}
                                 </Link>
                             </td>{" "}
-                            <td className="py-3 px-2 cursor-pointer">
+                            <td className="py-3 px-2">
                                 <Link href={i.href} target="_blank">
                                     {!isNaN(i.volume)
                                         ? "$" + formatNumber(i.volume)
                                         : "?"}
                                 </Link>
                             </td>
-                            <td className="py-3 px-2 cursor-pointer">
+                            <td className="py-3 px-2">
                                 <Link href={i.href} target="_blank">
                                     {!isNaN(i.currencies) ? i.currencies : "?"}
                                 </Link>

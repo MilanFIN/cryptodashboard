@@ -6,19 +6,17 @@ import { crossCircled, infoCircled } from "../icons/icons";
 export function InfoBox(props: { children: React.ReactNode }) {
     const [open, setOpen] = useState(false);
 
-
-
     return (
         <div className="relative">
-            <div className="cursor-pointer" onClick={() => setOpen(!open)}>{infoCircled}</div>
+            <div
+                className="cursor-pointer"
+                onMouseEnter={() => setOpen(true)}
+                onMouseLeave={() => setOpen(false)}
+            >
+                {infoCircled}
+            </div>
             {open ? (
-                <div
-                    className="absolute top-3 left-3 bg-gray-300 w-64 rounded-b-md rounded-r-md p-1"
-                    onClick={(e) => {
-                        //e.stopPropagation(); // Prevent click event from bubbling up to document
-                    }}
-                >
-                    <div className="cursor-pointer flex flex-row flex-row-reverse" onClick={() => setOpen(false)}>{crossCircled}</div>
+                <div className="absolute z-10 top-3 left-3 shadow-lg bg-white border-2 w-64 rounded-b-md rounded-r-md p-1">
                     {props.children}
                 </div>
             ) : null}

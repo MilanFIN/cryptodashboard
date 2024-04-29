@@ -28,7 +28,7 @@ export default function CurrencySelector(props: {
         <div className="w-32" ref={wrapperRef}>
             <div onClick={() => setOpen(!open)} className="cursor-pointer w-full">Currency: {props.selected}</div>
             {open && (
-                <div className="absolute z-10 bg-gray-100 shadow-md mt-1 w-32  rounded-md border-2 p-2">
+                <div className="absolute z-10 bg-white shadow-md mt-1 w-32  rounded-md border-2 shadow-lg p-2">
                     {props.currencies.map((c, ind) => (
                         <div
                             className="hover:bg-gray-300 w-full cursor-pointer"

@@ -17,8 +17,8 @@ export default function ExchangeHeader(props: { exchanges: Exchange[] }) {
 
     return (
         <div className="flex flex-wrap my-auto mt-2">
-            <div className="mr-2 bg-gray-200 rounded-md p-1">Total Volume: {currencySymbol}{formatNumber(sanitizeCurrency(volume))}</div>
-			<div className="bg-gray-200 rounded-md p-1">Exchanges: {props.exchanges.length}</div>
+            <div className="mr-2 bg-white shadow-lg border-2 rounded-md p-1 px-2 hover:bg-gray-100">Total Volume: {currencySymbol}{formatNumber(sanitizeCurrency(volume))}</div>
+			<div className="bg-white shadow-lg border-2 rounded-md p-1 px-2 hover:bg-gray-100">Exchanges: {props.exchanges.length}</div>
         </div>
     );
 }
