@@ -3,35 +3,41 @@ import { useEffect, useState } from "react";
 import { CoinDetails, Exchange } from "../actions/crypto";
 import { DashboardRow } from "./DashboardRow";
 import { IconSource } from "../actions/images";
-import Link from "next/link";
+import {Link} from "@/navigation";
 import { formatNumber } from "../utils/common";
 import { InfoBox } from "./InfoBox";
+import { useTranslations } from "next-intl";
 
 type SortType = {
     col: number;
     ascending: boolean;
 };
 
-const columnHeaders = [
-    <span>#</span>,
-    <span>Name</span>,
-    <span className="flex flex-wrap">
-        Share %
-        <InfoBox>Share of total trading volume during the last 24h</InfoBox>
-    </span>,
-    <span className="flex flex-wrap">
-        Volume
-        <InfoBox>Total trading volume during the last 24h</InfoBox>
-    </span>,
-    <span className="flex flex-wrap">
-        Currencies
-        <InfoBox>
-            The amount of crypto-fiat pairs listed in the exchange
-        </InfoBox>
-    </span>,
-];
 
 export default function ExchangesTable(props: { items: Exchange[] }) {
+
+    const t = useTranslations("Exchanges");
+
+    const columnHeaders = [
+        <span>{t("#")}</span>,
+        <span>{t("Name")}</span>,
+        <span className="flex flex-wrap">
+            {t("Share %")}
+            <InfoBox>{t("ShareOfTotalVolume")}</InfoBox>
+        </span>,
+        <span className="flex flex-wrap">
+            {t("Volume")}
+            <InfoBox>{t("TotalTradingVolume")}</InfoBox>
+        </span>,
+        <span className="flex flex-wrap">
+            {t("Currencies")}
+            <InfoBox>
+                {t("AmountOfCryptoFiatPairs")}
+            </InfoBox>
+        </span>,
+    ];
+    
+
     const [items, setItems] = useState<Exchange[]>([]);
     const [currentSort, setCurrentSort] = useState<SortType>({
         col: 0,
@@ -79,7 +85,7 @@ export default function ExchangesTable(props: { items: Exchange[] }) {
     }
 
     return (
-        <table className="w-full">
+        <table className="w-full overflow-x-scroll mx-2">
             <thead className="border-b-2">
                 <tr>
                     {columnHeaders.map((i: React.ReactNode, ind: number) => (
@@ -119,7 +125,7 @@ export default function ExchangesTable(props: { items: Exchange[] }) {
                                 <Link href={i.href} target="_blank">
                                     {i.share.toFixed(2)}
                                 </Link>
-                            </td>{" "}
+                            </td>
                             <td className="py-3 px-2">
                                 <Link href={i.href} target="_blank">
                                     {!isNaN(i.volume)

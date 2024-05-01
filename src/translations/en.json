@@ -1,0 +1,48 @@
+{
+    "Page": {
+        "AllCryptoCurrencies": "All Cryptocurrencies",
+        "#": "#",
+        "Name": "Name",
+        "Price": "Price",
+        "Market Cap": "Market Cap",
+        "Change 24h": "Change 24h",
+        "Bookmarked Cryptocurrencies": "Bookmarked Cryptocurrencies",
+        "Cryptocurrencies": "Cryptocurrencies",
+        "Bookmarked": "Bookmarked",
+        "Exchanges": "Exchanges",
+        "About": "About",
+        "Currency:": "Currency:"
+    },
+    "Exchanges": {
+        "Exchanges": "Exchanges",
+        "Total Volume: ": "Total Volume: ",
+        "Exchanges:": "Exchanges:",
+        "#": "#",
+        "Name": "Name",
+        "Share %": "Share %",
+        "Volume": "Volume",
+        "Currencies": "Currencies",
+        "ShareOfTotalVolume": "Share of total trading volume during the last 24h",
+        "TotalTradingVolume": "Total trading volume during the last 24h",
+        "AmountOfCryptoFiatPairs": "The amount of crypto-fiat pairs listed in the exchange"
+    },
+    "Coin": {
+        "Rank:": "Rank:",
+        "Price:": "Price:",
+        "Market Cap:": "Market Cap:",
+        "Diluted valuation:": "Diluted valuation:",
+        "Supply:": "Supply:",
+        "Total Supply:": "Total Supply:",
+        "EstimatedDilutedMarketCap": "Estimated market cap, if total supply was accounted for.",
+        "AmountOfCoinsMinted": "The amount of coins that have been minted",
+        "TotalAmountOfCoinsToBeMinted": "The total amount of coins that will be minted",
+		"Markets": "Markets",
+		"ExchangesWithCoinListed": "Exchanges where this coin is listed"
+    },
+	"About": {
+		"About": "About",
+		"API": "This page lists the most valuable cryptocurrencies by using the api from: ",
+		"CurrencyIcons": "For currency icons this page uses cryptocurrency-icons. See:",
+		"RadixIcons": "For all other icons. See:"
+	}
+}

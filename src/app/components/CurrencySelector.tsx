@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
 export default function CurrencySelector(props: {
@@ -5,6 +6,9 @@ export default function CurrencySelector(props: {
     currencies: string[];
     setCurrency: (i: number) => void;
 }) {
+
+    const t = useTranslations("Page");
+
     const [open, setOpen] = useState(false);
     const wrapperRef = useRef<HTMLDivElement | null>(null); // Create a ref for the wrapper div
 
@@ -26,7 +30,7 @@ export default function CurrencySelector(props: {
 
     return (
         <div className="w-32" ref={wrapperRef}>
-            <div onClick={() => setOpen(!open)} className="cursor-pointer w-full">Currency: {props.selected}</div>
+            <div onClick={() => setOpen(!open)} className="cursor-pointer w-full">{t("Currency:")} {props.selected}</div>
             {open && (
                 <div className="absolute z-10 bg-white shadow-md mt-1 w-32  rounded-md border-2 shadow-lg p-2">
                     {props.currencies.map((c, ind) => (

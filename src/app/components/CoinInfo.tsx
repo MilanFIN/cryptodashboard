@@ -12,8 +12,11 @@ import SavedProvider, {
 import Link from "next/link";
 import { formatNumber } from "../utils/common";
 import { InfoBox } from "./InfoBox";
+import { useTranslations } from "next-intl";
 
 export default function CoinInfo(props: { details: CoinDetails; img: string }) {
+    const t = useTranslations("Coin");
+
     const { sanitizeCurrency, currencySymbol } =
         useCurrencyContext() as CurrencyContextType;
 
@@ -22,11 +25,11 @@ export default function CoinInfo(props: { details: CoinDetails; img: string }) {
             <table>
                 <tbody className="divide-y">
                     <tr>
-                        <td>Rank: </td>
+                        <td>{t("Rank:")}</td>
                         <td className="text-right">{props.details.rank}</td>
                     </tr>
                     <tr>
-                        <td>Price:</td>
+                        <td>{t("Price:")}</td>
                         <td className="text-right">
                             {currencySymbol}
                             {formatNumber(
@@ -44,7 +47,7 @@ export default function CoinInfo(props: { details: CoinDetails; img: string }) {
                         </td>
                     </tr>
                     <tr>
-                        <td>Market Cap:</td>
+                        <td>{t("Market Cap:")}</td>
                         <td className="text-right">
                             {currencySymbol}
                             {formatNumber(
@@ -54,10 +57,10 @@ export default function CoinInfo(props: { details: CoinDetails; img: string }) {
                     </tr>
                     <tr>
                         <td className="pr-4 flex flex-wrap">
-                            Diluted valuation:
+                            {t("Diluted valuation:")}
                             <InfoBox>
                                 <span>
-                                    Estimated market cap, if total supply was accounted for.
+                                    {t("EstimatedDilutedMarketCap")}
                                 </span>
                             </InfoBox>
                         </td>
@@ -76,10 +79,10 @@ export default function CoinInfo(props: { details: CoinDetails; img: string }) {
                     </tr>
                     <tr>
                         <td className="flex flex-wrap">
-                            Supply:
+                            {t("Supply:")}
                             <InfoBox>
                                 <span>
-                                    The amount of coins that have been minted
+                                    {t("AmountOfCoinsMinted")}
                                 </span>
                             </InfoBox>
                         </td>
@@ -91,11 +94,10 @@ export default function CoinInfo(props: { details: CoinDetails; img: string }) {
                     </tr>
                     <tr>
                         <td className="flex flex-wrap">
-                            Total Supply:
+                            {t("Total Supply:")}
                             <InfoBox>
                                 <span>
-                                    The total amount of coins that will be
-                                    minted
+                                    {t("TotalAmountOfCoinsToBeMinted")}
                                 </span>
                             </InfoBox>
                         </td>

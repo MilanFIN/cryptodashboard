@@ -93,6 +93,25 @@ export async function getDashContent(page: number): Promise<CoinDetails[]> {
     });
 }
 
+export async function getTempContent() {
+    const iter = [1,2,3,4,5,6,7,8,9,10];
+    return iter.map((rank: number) => {
+        return {
+            id: rank.toString(),
+            rank: rank,
+            symbol: "",
+            name: "",
+            supply: 0,
+            maxSupply: 0,
+            marketCapUsd: 0,
+            volumeUsd24Hr: 0,
+            priceUsd: 0,
+            changePercent24Hr: 0,
+        };
+    });
+
+}
+
 export async function getCoinDetails(id: string): Promise<CoinDetails> {
     let response = await fetch("https://api.coincap.io/v2/assets/" + id);
     const asset = (await response.json()).data;

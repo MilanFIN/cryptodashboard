@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import {Link} from "@/navigation"
 import Image from 'next/image'
 import { CoinDetails, DashboardRowContent } from "../actions/crypto";
 import { SavedField } from "./Savedfield";

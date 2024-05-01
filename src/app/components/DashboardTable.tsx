@@ -1,21 +1,27 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { CoinDetails } from "../actions/crypto";
 import { DashboardRow } from "./DashboardRow";
 import { IconSource } from "../actions/images";
+import { useTranslations } from "next-intl";
 
 type SortType = {
     col: number;
     ascending: boolean;
 };
 
-const columnHeaders = ["#", "Name", "Price", "Market Cap", "Change 24h"];
 
 export default function DashboardTable(props: {
     items: CoinDetails[];
     icons: IconSource[];
     showSaved: boolean;
 }) {
+
+    const t = useTranslations("Page");
+
+    const columnHeaders = ["#", "Name", "Price", "Market Cap", "Change 24h"];
+
+
     const [items, setItems] = useState<CoinDetails[]>([]);
     const [currentSort, setCurrentSort] = useState<SortType>({
         col: 0,
@@ -67,7 +73,7 @@ export default function DashboardTable(props: {
     }
 
     return (
-        <table className="w-full">
+        <table className="w-full overflow-x-scroll mx-2">
             <thead className="border-b-2">
                 <tr>
                     {columnHeaders.map((i: string, ind: number) => (
@@ -79,12 +85,12 @@ export default function DashboardTable(props: {
                             <span className="text-sm mr-1">
                                 {getSortArrow(ind)}
                             </span>
-                            {i}
+                            {t(i)}
                         </td>
                     ))}
                 </tr>
             </thead>
-            {items.length > 0 ? (
+            <Suspense fallback={<tbody></tbody>}>
                 <tbody className="divide-y divide-solid divide-y-2">
                     {items.map((i) => (
                         <tr
@@ -99,9 +105,8 @@ export default function DashboardTable(props: {
                         </tr>
                     ))}
                 </tbody>
-            ) : (
-                <tbody></tbody>
-            )}
+
+            </Suspense>
         </table>
     );
 }

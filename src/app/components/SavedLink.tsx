@@ -4,11 +4,11 @@ import SavedProvider, {
     SavedContextType,
     useSavedContext,
 } from "../context/LocalContextProvider";
-import Link from "next/link";
+import {Link} from "@/navigation";
 
-export default function SavedLink(props: { children: React.ReactNode }) {
+export default function SavedLink(props: { children: React.ReactNode}) {
     const { saved } =
         useSavedContext() as SavedContextType;
 
-    return <Link href={"/favorites/" + saved.join(",")}>{props.children}</Link>;
+    return <Link href={"/bookmarked/" + saved.join(",")}>{props.children}</Link>;
 }

@@ -1,8 +1,12 @@
-import Link from "next/link";
-import Dashboard from "../components/Dashboard";
-import PageNavigation from "../components/PageNavigation";
+import Dashboard from "../../components/Dashboard";
+import PageNavigation from "../../components/PageNavigation";
+
+import {useTranslations} from 'next-intl';
 
 export default function Home({ params }: { params: { page: string[] } }) {
+
+    const t = useTranslations('Page');
+
     let page = 1;
     if (params.page !== undefined) {
         page = parseInt(params.page[0]);

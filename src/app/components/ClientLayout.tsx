@@ -1,18 +1,21 @@
-import { getRates } from "../actions/crypto";
+import { NextIntlClientProvider, useMessages } from "next-intl";
+import { Rate } from "../actions/crypto";
 import CurrencyProvider from "../context/CurrencyContextProvider";
 import SavedProvider from "../context/LocalContextProvider";
 
-export default async function ClientLayout({
-    children,
-}: Readonly<{
+export default function ClientLayout(props: {
     children: React.ReactNode;
-}>) {
+    rates: Rate[];
+    locale: string;
+}) {
 
-    const rates = await getRates();
+    const messages = useMessages();
 
     return (
-        <CurrencyProvider rates={rates}>
-            <SavedProvider>{children}</SavedProvider>
-        </CurrencyProvider>
+        <NextIntlClientProvider locale={props.locale} messages={messages}>
+            <CurrencyProvider rates={props.rates}>
+                <SavedProvider>{props.children}</SavedProvider>
+            </CurrencyProvider>
+        </NextIntlClientProvider>
     );
 }

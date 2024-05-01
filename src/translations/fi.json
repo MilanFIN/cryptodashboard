@@ -1,0 +1,48 @@
+{
+    "Page": {
+        "AllCryptoCurrencies": "Kaikki Kryptovaluutat",
+        "#": "#",
+        "Name": "Nimi",
+        "Price": "Hinta",
+        "Market Cap": "Markkina-arvo",
+        "Change 24h": "Muutos 24h",
+        "Bookmarked Cryptocurrencies": "Kirjanmerkityt",
+        "Cryptocurrencies": "Kryptovaluutat",
+        "Bookmarked": "Kirjanmerkityt",
+        "Exchanges": "Valuuttapörssit",
+        "About": "Tietoja",
+        "Currency:": "Valuutta:"
+    },
+    "Exchanges": {
+        "Exchanges": "Valuuttapörssit",
+        "Total Volume: ": "Kokonaisvaihtomäärä: ",
+        "Exchanges:": "Valuuttapörssejä:",
+        "#": "#",
+        "Name": "Nimi",
+        "Share %": "Osuus %",
+        "Volume": "Vaihtomäärä",
+        "Currencies": "Valuuttoja",
+        "ShareOfTotalVolume": "Osuus vaihdosta edellisen 24h aikana",
+        "TotalTradingVolume": "Vaihdon suuruus edellisen 24h aikana",
+        "AmountOfCryptoFiatPairs": "Kauppapaikalla listattujen vaihtoparien määrä"
+    },
+    "Coin": {
+        "Rank:": "Sijoitus:",
+        "Price:": "Hinta:",
+        "Market Cap:": "Markkina-arvo:",
+        "Diluted valuation:": "Laimennettu markkina-arvo:",
+        "Supply:": "Tarjonta:",
+        "Total Supply:": "Kokonaistarjonta:",
+        "EstimatedDilutedMarketCap": "Arvioitu markkina-arvo kokonaistarjonta huomioon ottaen.",
+        "AmountOfCoinsMinted": "Liikkeellelasketun valuutan määrä",
+        "TotalAmountOfCoinsToBeMinted": "Valuutan kokonaismäärä tulevaisuudessa",
+        "Markets": "Vaihtopaikat",
+        "ExchangesWithCoinListed": "Vaihtopaikat, joissa valuutta on listattuna"
+    },
+    "About": {
+		"About": "Tietoja",
+		"API": "Tämä sivu näyttää arvokkaimmat kryptovaluutat seuraavan rajapinnan mukaan:",
+		"CurrencyIcons": "Kryptovaluuttojen iconeita varten sivusto käyttää riippuvuutta cryptocurrency-icons, joka löytyy:",
+		"RadixIcons": "Muut iconit löytyvät:"
+    }
+}

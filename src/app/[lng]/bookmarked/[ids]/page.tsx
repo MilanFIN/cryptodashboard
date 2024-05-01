@@ -4,10 +4,13 @@ import {
     getPriceHistory,
 } from "@/app/actions/crypto";
 import { getImages } from "@/app/actions/images";
+import Bookmarked from "@/app/components/Bookmarked";
 import { DashboardRow } from "@/app/components/DashboardRow";
 import DashboardTable from "@/app/components/DashboardTable";
 import Linechart from "@/app/components/Linechart";
+import { useTranslations } from "next-intl";
 import { Suspense } from "react";
+import { useTranslation } from "react-i18next";
 
 export default async function SavedCoins({
     params,
@@ -19,20 +22,11 @@ export default async function SavedCoins({
 
     const images = await getImages();
 
+
     return (
         <main className=" min-h-screen ">
             <div className=" xl:w-[800px] w-full mt-4">
-                <h1 className="text-xl mb-2">Favorite Cryptocurrencies</h1>
-
-                <Suspense fallback={null}>
-                    <div className="border-2 rounded-xl">
-                        <DashboardTable
-                            items={values}
-                            icons={images}
-                            showSaved={false}
-                        />
-                    </div>
-                </Suspense>
+                <Bookmarked icons={images} coins={values}/>
             </div>
         </main>
     );
