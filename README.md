@@ -1,4 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Cryptocurrency dashboard
+
+A next.js based cryptocurrency browser.
+
+## Setup
+
+* dev: `npm run dev`
+* Production: `npm run build && npm start`
+
+## Tests
+
+### E2E tests with playwright
+
+`tests/e2e` contains end to end tests with playwright using chromium & firefox.
+
+* First you must run the project in a separate terminal
+* Then run tests with `npx playwright test`
+
+### Unit tests
+
+tbd
 
 ## Attributions
 

@@ -73,7 +73,7 @@ export default function DashboardTable(props: {
     }
 
     return (
-        <table className="w-full overflow-x-scroll mx-2">
+        <table className="w-full overflow-x-scroll px-2">
             <thead className="border-b-2">
                 <tr>
                     {columnHeaders.map((i: string, ind: number) => (

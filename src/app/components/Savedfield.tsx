@@ -11,8 +11,8 @@ export function SavedField(props: { id: string }) {
         useSavedContext() as SavedContextType;
 
     if (saved.some((i) => i == props.id)) {
-        return <div className="cursor-pointer mr-2 my-auto" onClick={() => removeSaved(props.id)}>{heartFilled}</div>;
+        return <div className="cursor-pointer mr-2 my-auto" id={"bookmarked_"+props.id} onClick={() => removeSaved(props.id)}>{heartFilled}</div>;
     } else {
-        return <div className="cursor-pointer mr-2 my-auto" onClick={() => addSaved(props.id)}>{heartEmpty}</div>;
+        return <div className="cursor-pointer mr-2 my-auto" id={"bookmarked_"+props.id} onClick={() => addSaved(props.id)}>{heartEmpty}</div>;
     }
 }

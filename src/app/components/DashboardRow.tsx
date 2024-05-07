@@ -60,7 +60,7 @@ export function DashboardRow(props: {
                         className="mr-2"
                         alt="Currency icon"
                     ></Image>
-                    <span className="font-bold mr-2">
+                    <span className="font-bold mr-2" id={"currencyname_"+props.content.name}>
                         {props.content.name}{" "}
                     </span>
                     {props.content.symbol}
