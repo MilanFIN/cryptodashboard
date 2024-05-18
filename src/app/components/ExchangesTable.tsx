@@ -23,7 +23,7 @@ export default function ExchangesTable(props: { items: Exchange[] }) {
         <span>{t("Name")}</span>,
         <span className="flex flex-wrap">
             {t("Share %")}
-            <InfoBox>{t("ShareOfTotalVolume")}</InfoBox>
+            <InfoBox><span id="shareoftotalvolumeinfo">{t("ShareOfTotalVolume")}</span></InfoBox>
         </span>,
         <span className="flex flex-wrap">
             {t("Volume")}

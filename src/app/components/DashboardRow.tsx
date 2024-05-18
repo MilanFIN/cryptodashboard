@@ -1,6 +1,6 @@
 "use client";
-import {Link} from "@/navigation"
-import Image from 'next/image'
+import { Link } from "@/navigation";
+import Image from "next/image";
 import { CoinDetails, DashboardRowContent } from "../actions/crypto";
 import { SavedField } from "./Savedfield";
 import { IconSource } from "../actions/images";
@@ -32,7 +32,7 @@ export function DashboardRow(props: {
                     (i) => i.symbol === props.content.symbol.toLowerCase()
                 )[0].content
             );
-        } else {
+        } else if (props.icons.length > 0) {
             setImg(
                 props.icons.filter((i) => i.symbol === "generic")[0].content
             );
@@ -60,7 +60,10 @@ export function DashboardRow(props: {
                         className="mr-2"
                         alt="Currency icon"
                     ></Image>
-                    <span className="font-bold mr-2" id={"currencyname_"+props.content.name}>
+                    <span
+                        className="font-bold mr-2"
+                        id={"row_name_" + props.content.id}
+                    >
                         {props.content.name}{" "}
                     </span>
                     {props.content.symbol}
@@ -68,14 +71,20 @@ export function DashboardRow(props: {
             </td>
             <td className="py-3 px-2">
                 <Link href={"/coin/" + props.content.id}>
-                    {currencySymbol}
-                    {formatNumber(sanitizeCurrency(props.content.priceUsd))}
+                    <span id={"row_price_" + props.content.id} data-testid={"row_price_" + props.content.id}>
+                        {currencySymbol}
+                        {formatNumber(sanitizeCurrency(props.content.priceUsd))}
+                    </span>
                 </Link>
             </td>
             <td className="py-3 px-2">
                 <Link href={"/coin/" + props.content.id}>
-                    {currencySymbol}
-                    {formatNumber(sanitizeCurrency(props.content.marketCapUsd))}
+                    <span id={"row_marketcap_" + props.content.id} data-testid={"row_marketcap_" + props.content.id}>
+                        {currencySymbol}
+                        {formatNumber(
+                            sanitizeCurrency(props.content.marketCapUsd)
+                        )}
+                    </span>
                 </Link>
             </td>
             <td
@@ -86,7 +95,10 @@ export function DashboardRow(props: {
                 } py-3 px-2`}
             >
                 <Link href={"/coin/" + props.content.id}>
-                    {Math.abs(props.content.changePercent24Hr).toFixed(2) + "%"}
+                    <span id={"row_percentage_" + props.content.id} data-testid={"row_percentage_" + props.content.id}>
+                        {Math.abs(props.content.changePercent24Hr).toFixed(2) +
+                            "%"}
+                    </span>
                 </Link>
             </td>
         </>
