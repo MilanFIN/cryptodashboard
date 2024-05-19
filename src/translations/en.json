@@ -11,7 +11,9 @@
         "Bookmarked": "Bookmarked",
         "Exchanges": "Exchanges",
         "About": "About",
-        "Currency:": "Currency:"
+        "Currency:": "Currency:",
+        "Next": "Next",
+        "Previous": "Previous"
     },
     "Exchanges": {
         "Exchanges": "Exchanges",

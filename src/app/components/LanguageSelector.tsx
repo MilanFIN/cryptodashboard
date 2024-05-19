@@ -6,6 +6,7 @@ export default function LanguageSelector() {
 
 	return (<div>
 		<Link href={"/"} locale="en">EN</Link>
+		<span> / </span>
 		<Link href={"/"} locale="fi">FI</Link>
 
 	</div>);

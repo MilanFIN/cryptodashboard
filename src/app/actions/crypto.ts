@@ -74,7 +74,12 @@ export async function getDashContent(page: number): Promise<CoinDetails[]> {
         return [];
     }
     let response = await fetch(
-        "https://api.coincap.io/v2/assets?offset=" + (page - 1) * 100
+        "https://api.coincap.io/v2/assets?offset=" + (page - 1) * 100,
+        {
+            next: {
+                revalidate: 3600,
+            },
+        }
     );
     const assets = await response.json();
     return assets.data.map((asset: any) => {
@@ -94,7 +99,7 @@ export async function getDashContent(page: number): Promise<CoinDetails[]> {
 }
 
 export async function getTempContent() {
-    const iter = [1,2,3,4,5,6,7,8,9,10];
+    const iter = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     return iter.map((rank: number) => {
         return {
             id: rank.toString(),
@@ -109,11 +114,15 @@ export async function getTempContent() {
             changePercent24Hr: 0,
         };
     });
-
 }
 
 export async function getCoinDetails(id: string): Promise<CoinDetails> {
-    let response = await fetch("https://api.coincap.io/v2/assets/" + id);
+    let response = await fetch("https://api.coincap.io/v2/assets/" + id,
+    {
+        next: {
+            revalidate: 3600,
+        },
+    });
     const asset = (await response.json()).data;
     const details: CoinDetails = {
         id: asset.id,
@@ -132,7 +141,12 @@ export async function getCoinDetails(id: string): Promise<CoinDetails> {
 
 export async function getCoinMarkets(id: string): Promise<string[]> {
     let response = await fetch(
-        `https://api.coincap.io/v2/assets/${id}/markets`
+        `https://api.coincap.io/v2/assets/${id}/markets`,
+        {
+            next: {
+                revalidate: 3600,
+            },
+        }
     );
     const assets = await response.json();
     return getDistinctValues(
@@ -189,7 +203,12 @@ export async function getPriceHistory(
             "&start=" +
             start +
             "&end=" +
-            end
+            end,
+            {
+                next: {
+                    revalidate: 3600,
+                },
+            }
     );
     const data = (await response.json()).data;
 
@@ -200,7 +219,12 @@ export async function getPriceHistory(
 }
 
 export async function getExchanges(): Promise<Exchange[]> {
-    let response = await fetch(`https://api.coincap.io/v2/exchanges`);
+    let response = await fetch(`https://api.coincap.io/v2/exchanges`,
+    {
+        next: {
+            revalidate: 3600,
+        },
+    });
     const ex = await response.json();
 
     return ex.data.map((ex: any) => {
@@ -217,7 +241,12 @@ export async function getExchanges(): Promise<Exchange[]> {
 }
 
 export async function getRates(): Promise<Rate[]> {
-    let response = await fetch(`https://api.coincap.io/v2/rates`);
+    let response = await fetch(`https://api.coincap.io/v2/rates`,
+    {
+        next: {
+            revalidate: 3600,
+        },
+    });
     const rates = await response.json();
     let filteredRates = rates.data
         .map((r: any) => {

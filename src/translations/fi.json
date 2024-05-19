@@ -11,7 +11,10 @@
         "Bookmarked": "Kirjanmerkityt",
         "Exchanges": "Valuuttapörssit",
         "About": "Tietoja",
-        "Currency:": "Valuutta:"
+        "Currency:": "Valuutta:",
+        "Next": "Seuraava",
+        "Previous": "Edellinen"
+
     },
     "Exchanges": {
         "Exchanges": "Valuuttapörssit",
@@ -30,10 +33,10 @@
         "Rank:": "Sijoitus:",
         "Price:": "Hinta:",
         "Market Cap:": "Markkina-arvo:",
-        "Diluted valuation:": "Laimennettu markkina-arvo:",
-        "Supply:": "Tarjonta:",
-        "Total Supply:": "Kokonaistarjonta:",
-        "EstimatedDilutedMarketCap": "Arvioitu markkina-arvo kokonaistarjonta huomioon ottaen.",
+        "Diluted valuation:": "Enimmäismäärän markkina-arvo:",
+        "Supply:": "Määrä:",
+        "Total Supply:": "Kokonaismäärä:",
+        "EstimatedDilutedMarketCap": "Arvioitu markkina-arvo kokonaismäärä huomioon ottaen.",
         "AmountOfCoinsMinted": "Liikkeellelasketun valuutan määrä",
         "TotalAmountOfCoinsToBeMinted": "Valuutan kokonaismäärä tulevaisuudessa",
         "Markets": "Vaihtopaikat",

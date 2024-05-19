@@ -1,7 +1,11 @@
 "use client";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
+
 
 export default function PageNavigation(props: { page: number }) {
+    const t = useTranslations("Page");
+
     const next = props.page + 1;
     const prev = props.page - 1;
     return (
@@ -15,11 +19,14 @@ export default function PageNavigation(props: { page: number }) {
                     if (prev <= 0) e.preventDefault();
                 }}
             >
-                Previous
+                {t("Previous")}
             </Link>
 
-            <Link className="text-blue-800 bg-gray-300 rounded-md px-2 py-1 ml-1 font-bold" href={"/" + next}>
-                Next
+            <Link
+                className="text-blue-800 bg-gray-300 rounded-md px-2 py-1 ml-1 font-bold"
+                href={"/" + next}
+            >
+                {t("Next")}
             </Link>
         </div>
     );
