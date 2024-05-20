@@ -116,27 +116,33 @@ export async function getTempContent() {
     });
 }
 
-export async function getCoinDetails(id: string): Promise<CoinDetails> {
-    let response = await fetch("https://api.coincap.io/v2/assets/" + id,
-    {
+export async function getCoinDetails(id: string): Promise<CoinDetails | null> {
+    let response = await fetch("https://api.coincap.io/v2/assets/" + id, {
         next: {
             revalidate: 3600,
         },
     });
-    const asset = (await response.json()).data;
-    const details: CoinDetails = {
-        id: asset.id,
-        rank: parseInt(asset.rank),
-        symbol: asset.symbol,
-        name: asset.name,
-        supply: parseFloat(asset.supply),
-        maxSupply: parseFloat(asset.maxSupply),
-        marketCapUsd: parseFloat(asset.marketCapUsd),
-        volumeUsd24Hr: parseFloat(asset.volumeUsd24Hr),
-        priceUsd: parseFloat(asset.priceUsd),
-        changePercent24Hr: parseFloat(asset.changePercent24Hr),
-    };
-    return details;
+    try {
+        if (!response.ok) {
+            return null;
+        }
+        const asset = (await response.json()).data;
+        const details: CoinDetails = {
+            id: asset.id,
+            rank: parseInt(asset.rank),
+            symbol: asset.symbol,
+            name: asset.name,
+            supply: parseFloat(asset.supply),
+            maxSupply: parseFloat(asset.maxSupply),
+            marketCapUsd: parseFloat(asset.marketCapUsd),
+            volumeUsd24Hr: parseFloat(asset.volumeUsd24Hr),
+            priceUsd: parseFloat(asset.priceUsd),
+            changePercent24Hr: parseFloat(asset.changePercent24Hr),
+        };
+        return details;
+    } catch (e) {
+        throw "An error occurred when fetching coin details.";
+    }
 }
 
 export async function getCoinMarkets(id: string): Promise<string[]> {
@@ -148,21 +154,28 @@ export async function getCoinMarkets(id: string): Promise<string[]> {
             },
         }
     );
-    const assets = await response.json();
-    return getDistinctValues(
-        assets.data.map((asset: any) => {
-            return asset.exchangeId;
-        })
-    );
+    try {
+        const assets = await response.json();
+        return getDistinctValues(
+            assets.data.map((asset: any) => {
+                return asset.exchangeId;
+            })
+        );
+    } catch (e) {
+        return [];
+    }
 }
 
 export async function getMultiple(ids: string[]): Promise<CoinDetails[]> {
     let multiple: CoinDetails[] = [];
-    for (let i = 0; i < ids.length; i++) {
-        multiple.push(await getCoinDetails(ids[i]));
+    try {
+        for (let i = 0; i < ids.length; i++) {
+            multiple.push((await getCoinDetails(ids[i]))!);
+        }
+        return multiple;
+    } catch (e) {
+        throw "An error occurred when fetching one or more of the bookmarked coins.";
     }
-
-    return multiple;
 }
 
 export async function getPriceHistory(
@@ -204,11 +217,11 @@ export async function getPriceHistory(
             start +
             "&end=" +
             end,
-            {
-                next: {
-                    revalidate: 3600,
-                },
-            }
+        {
+            next: {
+                revalidate: 3600,
+            },
+        }
     );
     const data = (await response.json()).data;
 
@@ -219,8 +232,7 @@ export async function getPriceHistory(
 }
 
 export async function getExchanges(): Promise<Exchange[]> {
-    let response = await fetch(`https://api.coincap.io/v2/exchanges`,
-    {
+    let response = await fetch(`https://api.coincap.io/v2/exchanges`, {
         next: {
             revalidate: 3600,
         },
@@ -241,8 +253,7 @@ export async function getExchanges(): Promise<Exchange[]> {
 }
 
 export async function getRates(): Promise<Rate[]> {
-    let response = await fetch(`https://api.coincap.io/v2/rates`,
-    {
+    let response = await fetch(`https://api.coincap.io/v2/rates`, {
         next: {
             revalidate: 3600,
         },

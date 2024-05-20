@@ -10,10 +10,14 @@ import GraphView from "@/app/components/GraphView";
 import Linechart from "@/app/components/Linechart";
 import { Suspense } from "react";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 
 export default async function Coin({ params }: { params: { id: string } }) {
     const details = await getCoinDetails(params.id);
+    if (details === null) {
+        return notFound();
+    }
     const markets = await getCoinMarkets(params.id);
     const images = await getImages();
     const initialPriceHistory = await getPriceHistory(params.id, "1m");
