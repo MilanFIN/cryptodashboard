@@ -8,7 +8,7 @@ export type IconSource = {
 };
 
 export async function getImages() {
-    const imageDirectory = "./public/cryptocurrency-icons/svg/color/";
+    const imageDirectory = `${process.cwd()}/public/cryptocurrency-icons/svg/color/`;
     const imageFilenames = await fs.readdir(imageDirectory);
 
     let images: IconSource[] = [];
@@ -18,10 +18,13 @@ export async function getImages() {
             "utf8"
         );
         images.push({
-            symbol: imageFilenames[i].substring(0, imageFilenames[i].length -4),
+            symbol: imageFilenames[i].substring(
+                0,
+                imageFilenames[i].length - 4
+            ),
             content: svg,
         });
     }
 
-	return images;
+    return images;
 }
