@@ -65,6 +65,11 @@ const includedCurrencies = [
     "bitcoin",
 ];
 
+const headers: { [key: string]: string } = {};
+if (process.env.API_KEY && process.env.API_KEY !== "") {
+    headers["Authorization"] = `Bearer ${process.env.API_KEY}`;
+}
+
 function getDistinctValues(strings: string[]): string[] {
     return [...new Set(strings)];
 }
@@ -73,9 +78,12 @@ export async function getDashContent(page: number): Promise<CoinDetails[]> {
     if (isNaN(page)) {
         return [];
     }
+
+    console.log(headers);
     let response = await fetch(
         "https://api.coincap.io/v2/assets?offset=" + (page - 1) * 100,
         {
+            headers: headers,
             next: {
                 revalidate: 3600,
             },
@@ -118,6 +126,8 @@ export async function getTempContent() {
 
 export async function getCoinDetails(id: string): Promise<CoinDetails | null> {
     let response = await fetch("https://api.coincap.io/v2/assets/" + id, {
+        headers: headers,
+
         next: {
             revalidate: 3600,
         },
@@ -149,6 +159,8 @@ export async function getCoinMarkets(id: string): Promise<string[]> {
     let response = await fetch(
         `https://api.coincap.io/v2/assets/${id}/markets`,
         {
+            headers: headers,
+
             next: {
                 revalidate: 3600,
             },
@@ -218,6 +230,8 @@ export async function getPriceHistory(
             "&end=" +
             end,
         {
+            headers: headers,
+
             next: {
                 revalidate: 3600,
             },
@@ -233,6 +247,8 @@ export async function getPriceHistory(
 
 export async function getExchanges(): Promise<Exchange[]> {
     let response = await fetch(`https://api.coincap.io/v2/exchanges`, {
+        headers: headers,
+
         next: {
             revalidate: 3600,
         },
@@ -254,6 +270,8 @@ export async function getExchanges(): Promise<Exchange[]> {
 
 export async function getRates(): Promise<Rate[]> {
     let response = await fetch(`https://api.coincap.io/v2/rates`, {
+        headers: headers,
+
         next: {
             revalidate: 3600,
         },
