@@ -8,7 +8,7 @@ export type IconSource = {
 };
 
 export async function getImages() {
-    const imageDirectory = "./node_modules/cryptocurrency-icons/svg/color/";
+    const imageDirectory = "./freeze/cryptocurrency-icons/svg/color/";
     const imageFilenames = await fs.readdir(imageDirectory);
 
     let images: IconSource[] = [];

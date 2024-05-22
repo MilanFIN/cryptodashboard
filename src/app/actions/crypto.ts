@@ -79,7 +79,6 @@ export async function getDashContent(page: number): Promise<CoinDetails[]> {
         return [];
     }
 
-    console.log(headers);
     let response = await fetch(
         "https://api.coincap.io/v2/assets?offset=" + (page - 1) * 100,
         {
