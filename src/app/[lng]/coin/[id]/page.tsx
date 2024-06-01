@@ -12,7 +12,6 @@ import { Suspense } from "react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-
 export default async function Coin({ params }: { params: { id: string } }) {
     const details = await getCoinDetails(params.id);
     if (details === null) {
@@ -39,15 +38,17 @@ export default async function Coin({ params }: { params: { id: string } }) {
                     className="mr-2"
                     alt="Currency icon"
                 ></Image>
-                <span className="font-bold mr-2 text-2xl my-auto">{details.name}</span>
+                <span className="font-bold mr-2 text-2xl my-auto">
+                    {details.name}
+                </span>
                 <span className="text-xl my-auto">{details.symbol}</span>
             </div>
 
-            <div className="flex w-full">
-                <div className="w-fit m-1">
+            <div className="xl:flex">
+                <div className="w-fit">
                     <CoinInfo img={img} details={details} />
                 </div>
-                <div className="m-1">
+                <div className="w-full mt-2 xl:mt-0">
                     <Suspense fallback={null}>
                         <CoinMarketsTable markets={markets} />
                     </Suspense>

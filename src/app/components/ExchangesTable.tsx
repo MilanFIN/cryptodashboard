@@ -85,12 +85,12 @@ export default function ExchangesTable(props: { items: Exchange[] }) {
     }
 
     return (
-        <table className="w-full overflow-x-scroll mx-2">
+        <table className="w-full overflow-x-scroll">
             <thead className="border-b-2">
                 <tr>
                     {columnHeaders.map((i: React.ReactNode, ind: number) => (
                         <td
-                            className="py-3 px-2 cursor-pointer"
+                            className="py-3 cursor-pointer"
                             onClick={() => sortBy(ind)}
                             key={"headercolumn_" + ind}
                         >

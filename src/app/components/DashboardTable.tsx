@@ -10,17 +10,14 @@ type SortType = {
     ascending: boolean;
 };
 
-
 export default function DashboardTable(props: {
     items: CoinDetails[];
     icons: IconSource[];
     showSaved: boolean;
 }) {
-
     const t = useTranslations("Page");
 
     const columnHeaders = ["#", "Name", "Price", "Market Cap", "Change 24h"];
-
 
     const [items, setItems] = useState<CoinDetails[]>([]);
     const [currentSort, setCurrentSort] = useState<SortType>({
@@ -73,7 +70,7 @@ export default function DashboardTable(props: {
     }
 
     return (
-        <table className="w-full overflow-x-scroll px-2">
+        <table className="w-full overflow-x-scroll px-2 ">
             <thead className="border-b-2">
                 <tr>
                     {columnHeaders.map((i: string, ind: number) => (
@@ -92,20 +89,29 @@ export default function DashboardTable(props: {
             </thead>
             <Suspense fallback={<tbody></tbody>}>
                 <tbody className="divide-y divide-solid divide-y-2">
-                    {items.map((i) => (
-                        <tr
-                            key={"contentrow_" + i.symbol}
-                            className="hover:bg-gray-100"
-                        >
-                            <DashboardRow
-                                content={i}
-                                icons={props.icons}
-                                showSaved={props.showSaved}
-                            />
+                    {items.length > 0 ? (
+                        items.map((i) => (
+                            <tr
+                                key={"contentrow_" + i.symbol}
+                                className="hover:bg-gray-100"
+                            >
+                                <DashboardRow
+                                    content={i}
+                                    icons={props.icons}
+                                    showSaved={props.showSaved}
+                                />
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
-                    ))}
+                    )}
                 </tbody>
-
             </Suspense>
         </table>
     );

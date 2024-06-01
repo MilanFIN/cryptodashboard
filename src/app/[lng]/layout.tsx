@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import SavedProvider from "../context/LocalContextProvider";
@@ -13,6 +13,10 @@ export const metadata: Metadata = {
     description: "tbd",
 };
 
+export const viewport: Viewport = {
+    width: '800px',
+};
+
 export default async function RootLayout({
     children,
     params: { lng },
@@ -20,19 +24,17 @@ export default async function RootLayout({
     children: React.ReactNode;
     params: { lng: string };
 }) {
-
     const rates = await getRates();
 
-
     return (
-        <html lang={lng}>
+        <html lang={lng} className="min-w-[800px]">
             <body className={inter.className}>
-                <div className="w-full grid justify-items-center mb-4">
-                    <ClientLayout rates={rates} locale={lng}>
-                        <NavBar/>
+                <ClientLayout rates={rates} locale={lng}>
+                    <NavBar />
+                    <div className="grid justify-items-center mb-4 px-2">
                         {children}
-                    </ClientLayout>
-                </div>
+                    </div>
+                </ClientLayout>
             </body>
         </html>
     );

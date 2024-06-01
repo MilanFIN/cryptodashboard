@@ -29,7 +29,7 @@ export default function CurrencySelector(props: {
     }, []);
 
     return (
-        <div className="w-32" ref={wrapperRef}>
+        <div  className="hover:bg-lime-300 py-1 px-2 rounded-2xl w-32" ref={wrapperRef}>
             <div onClick={() => setOpen(!open)} className="cursor-pointer w-full">{t("Currency:")} {props.selected}</div>
             {open && (
                 <div className="absolute z-10 bg-white shadow-md mt-1 w-32  rounded-md border-2 shadow-lg p-2">
