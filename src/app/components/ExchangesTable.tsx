@@ -90,7 +90,7 @@ export default function ExchangesTable(props: { items: Exchange[] }) {
                 <tr>
                     {columnHeaders.map((i: React.ReactNode, ind: number) => (
                         <td
-                            className="py-3 cursor-pointer"
+                            className="py-3 px-2 cursor-pointer"
                             onClick={() => sortBy(ind)}
                             key={"headercolumn_" + ind}
                         >

@@ -1,6 +1,5 @@
 "use client";
 import React, { useContext, useState } from "react";
-import useLocalStorage from "../hooks/UseLocalStorage";
 import { Rate } from "../actions/crypto";
 
 export type CurrencyContextType = {

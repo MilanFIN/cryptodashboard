@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import SavedProvider from "../context/LocalContextProvider";
 import NavBar from "../components/NavBar";
 import ClientLayout from "../components/ClientLayout";
 import { getRates } from "../actions/crypto";

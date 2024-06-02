@@ -1,4 +1,5 @@
 import {
+    CoinDetails,
     getCoinDetails,
     getMultiple,
     getPriceHistory,
@@ -9,16 +10,24 @@ import { DashboardRow } from "@/app/components/DashboardRow";
 import DashboardTable from "@/app/components/DashboardTable";
 import Linechart from "@/app/components/Linechart";
 import { useTranslations } from "next-intl";
+import { cookies } from "next/headers";
 import { Suspense } from "react";
 import { useTranslation } from "react-i18next";
 
 export default async function SavedCoins({
-    params,
 }: {
-    params: { ids: string };
 }) {
-    const ids = params.ids.split("%2C").slice(0, 10);
-    const values = (await getMultiple(ids)).sort((a, b) => a.rank - b.rank);
+
+    const bookmarks = cookies().get("bookmarked");
+    let values:CoinDetails[] = [];
+    if (bookmarks != null) {
+        const ids = bookmarks.value.split(",").slice(0, 10);
+
+        values = (await getMultiple(ids)).sort((a, b) => a.rank - b.rank);
+    }
+
+    //const ids = params.ids.split("%2C").slice(0, 10);
+    //const values = (await getMultiple(ids)).sort((a, b) => a.rank - b.rank);
 
     const images = await getImages();
 

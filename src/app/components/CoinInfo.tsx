@@ -4,11 +4,6 @@ import {
     CurrencyContextType,
     useCurrencyContext,
 } from "../context/CurrencyContextProvider";
-import SavedProvider, {
-    SavedContext,
-    SavedContextType,
-    useSavedContext,
-} from "../context/LocalContextProvider";
 import Link from "next/link";
 import { formatNumber } from "../utils/common";
 import { InfoBox } from "./InfoBox";

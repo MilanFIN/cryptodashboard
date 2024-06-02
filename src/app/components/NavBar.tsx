@@ -1,6 +1,5 @@
 "use client";
 import { Suspense, useContext } from "react";
-import SavedProvider from "../context/LocalContextProvider";
 import { Link } from "@/navigation";
 import SavedLink from "./SavedLink";
 import {

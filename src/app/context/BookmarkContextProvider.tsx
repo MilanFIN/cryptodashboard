@@ -1,7 +1,7 @@
 
 "use client"
 import React, { useContext, useState } from "react";
-import useLocalStorage from "../hooks/UseLocalStorage";
+import useCookieStorage from "../hooks/UseCookieStorage";
 
 export type SavedContextType = {
     saved: string[];
@@ -13,21 +13,20 @@ export type SavedContextType = {
 export const SavedContext = React.createContext<SavedContextType | null>(null);
 export const useSavedContext = () => useContext(SavedContext);
 
-const SavedProvider: React.FC<{ children: React.ReactNode }> = ({
+const BookmarkContextProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
-    const [saved, setSaved] = useLocalStorage("saved", new Array<string>());
-    //const [saved, setSaved] = useState<string[]>([]);
+    const [saved, setSaved] = useCookieStorage(new Array<string>());
 
     function addSaved(f: string) {
         if (!saved.includes(f)) {
-            setSaved((saved) => [...saved, f]);
+            setSaved((saved: string[]) => [...saved, f]);
         }
     }
 
     function removeSaved(f: string) {
         if (saved.includes(f)) {
-            setSaved((saved) => saved.filter(i => i !== f))
+            setSaved((saved:string[]) => saved.filter((i: string) => i !== f))
         }
     }
 
@@ -44,4 +43,4 @@ const SavedProvider: React.FC<{ children: React.ReactNode }> = ({
     );
 };
 
-export default SavedProvider;
+export default BookmarkContextProvider;

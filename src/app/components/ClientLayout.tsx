@@ -1,7 +1,7 @@
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { Rate } from "../actions/crypto";
 import CurrencyProvider from "../context/CurrencyContextProvider";
-import SavedProvider from "../context/LocalContextProvider";
+import BookmarkContextProvider from "../context/BookmarkContextProvider";
 
 export default function ClientLayout(props: {
     children: React.ReactNode;
@@ -14,7 +14,7 @@ export default function ClientLayout(props: {
     return (
         <NextIntlClientProvider locale={props.locale} messages={messages}>
             <CurrencyProvider rates={props.rates}>
-                <SavedProvider>{props.children}</SavedProvider>
+                <BookmarkContextProvider>{props.children}</BookmarkContextProvider>
             </CurrencyProvider>
         </NextIntlClientProvider>
     );
