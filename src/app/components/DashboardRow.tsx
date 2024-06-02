@@ -39,6 +39,10 @@ export function DashboardRow(props: {
         }
     });
 
+    if (props.content == null) {
+        return <></>
+    }
+
     return (
         <>
             <td className="py-3 px-2">
