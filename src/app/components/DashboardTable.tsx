@@ -95,11 +95,11 @@ export default function DashboardTable(props: {
                                 key={"contentrow_" + i.symbol}
                                 className="hover:bg-gray-100"
                             >
-                                {/*<DashboardRow
+                                {<DashboardRow
                                     content={i}
                                     icons={props.icons}
                                     showSaved={props.showSaved}
-                                />*/}
+                                />}
                             </tr>
                         ))
                     ) : (
