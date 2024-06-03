@@ -89,17 +89,17 @@ export default function DashboardTable(props: {
             </thead>
             <Suspense fallback={<tbody></tbody>}>
                 <tbody className="divide-y divide-solid divide-y-2">
-                    {/*items.length > 0 ? (
+                    {items.length > 0 ? (
                         items.map((i) => (
                             <tr
                                 key={"contentrow_" + i.symbol}
                                 className="hover:bg-gray-100"
                             >
-                                <DashboardRow
+                                {/*<DashboardRow
                                     content={i}
                                     icons={props.icons}
                                     showSaved={props.showSaved}
-                                />
+                                />*/}
                             </tr>
                         ))
                     ) : (
@@ -110,7 +110,7 @@ export default function DashboardTable(props: {
                             <td></td>
                             <td></td>
                         </tr>
-                    )*/}
+                    )}
                 </tbody>
             </Suspense>
         </table>
