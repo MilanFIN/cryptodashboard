@@ -97,7 +97,7 @@ export default function DashboardTable(props: {
                             >
                                 {<DashboardRow
                                     content={i}
-                                    icons={props.icons}
+                                    icons={[]/*props.icons*/}
                                     showSaved={props.showSaved}
                                 />}
                             </tr>
