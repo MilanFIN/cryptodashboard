@@ -21,7 +21,7 @@ export default async function SavedCoins({
     const bookmarks = cookies().get("bookmarked");
     let values:CoinDetails[] = [];
     if (bookmarks != null) {
-        const ids = bookmarks.value.split(",").slice(0, 10);
+        const ids = bookmarks.value.split(",").slice(0, 10).filter(i => i != "");
 
         values = (await getMultiple(ids)).sort((a, b) => a.rank - b.rank);
     }
