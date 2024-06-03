@@ -69,8 +69,6 @@ export default function DashboardTable(props: {
         }
     }
 
-    return <div></div>
-
     return (
         <table className="w-full overflow-x-scroll px-2 ">
             <thead className="border-b-2">
@@ -91,7 +89,7 @@ export default function DashboardTable(props: {
             </thead>
             <Suspense fallback={<tbody></tbody>}>
                 <tbody className="divide-y divide-solid divide-y-2">
-                    {items.length > 0 ? (
+                    {/*items.length > 0 ? (
                         items.map((i) => (
                             <tr
                                 key={"contentrow_" + i.symbol}
@@ -112,7 +110,7 @@ export default function DashboardTable(props: {
                             <td></td>
                             <td></td>
                         </tr>
-                    )}
+                    )*/}
                 </tbody>
             </Suspense>
         </table>
