@@ -69,6 +69,8 @@ export default function DashboardTable(props: {
         }
     }
 
+    return <div></div>
+
     return (
         <table className="w-full overflow-x-scroll px-2 ">
             <thead className="border-b-2">
