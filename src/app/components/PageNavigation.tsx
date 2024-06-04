@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 
-export default function PageNavigation(props: { page: number }) {
+export default function PageNavigation(props: { page: number, lng: string }) {
     const t = useTranslations("Page");
 
     const next = props.page + 1;
@@ -14,7 +14,7 @@ export default function PageNavigation(props: { page: number }) {
                 className={`${
                     prev <= 0 ? "text-gray-500 disabled" : "text-blue-800"
                 } bg-gray-300 rounded-md px-2 py-1 font-bold`}
-                href={"/" + prev}
+                href={`/${props.lng}/${prev}`}
                 onClick={(e) => {
                     if (prev <= 0) e.preventDefault();
                 }}
@@ -24,7 +24,7 @@ export default function PageNavigation(props: { page: number }) {
 
             <Link
                 className="text-blue-800 bg-gray-300 rounded-md px-2 py-1 ml-1 font-bold"
-                href={"/" + next}
+                href={`/${props.lng}/${next}`}
             >
                 {t("Next")}
             </Link>

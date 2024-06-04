@@ -3,7 +3,7 @@ import PageNavigation from "../../components/PageNavigation";
 
 import {useTranslations} from 'next-intl';
 
-export default function Home({ params }: { params: { page: string[] } }) {
+export default function Home({ params }: { params: { page: string[], lng: string } }) {
 
     const t = useTranslations('Page');
 
@@ -17,7 +17,7 @@ export default function Home({ params }: { params: { page: string[] } }) {
     return (
         <main className=" min-h-screen ">
             <Dashboard page={page} />
-            <PageNavigation page={page}/>
+            <PageNavigation page={page} lng={params.lng}/>
 
         </main>
     );
