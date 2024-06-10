@@ -17,7 +17,7 @@ export default function CoinInfo(props: { details: CoinDetails; img: string }) {
 
     return (
         <div className="border-2 rounded-md p-4 w-full">
-            <table>
+            <table id={"coindetails-table"}>
                 <tbody className="divide-y">
                     <tr>
                         <td>{t("Rank:")}</td>
