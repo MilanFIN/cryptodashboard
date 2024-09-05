@@ -11,7 +11,7 @@ type SortType = {
 };
 
 export default function DashboardTable(props: {
-    items: CoinDetails[];
+    items: Promise<CoinDetails[]>;
     icons: IconSource[];
     showSaved: boolean;
 }) {
@@ -26,8 +26,11 @@ export default function DashboardTable(props: {
     });
 
     useEffect(() => {
-        setItems(props.items);
-    }, []);
+        async function set(items: Promise<CoinDetails[]>) {
+            setItems(await items);
+        }
+        set(props.items);
+    }, [props.items]);
 
     function sortBy(col: number) {
         if (currentSort.col === col) {
@@ -90,18 +93,22 @@ export default function DashboardTable(props: {
             <Suspense fallback={<tbody></tbody>}>
                 <tbody className="divide-y divide-solid divide-y-2">
                     {items.length > 0 ? (
-                        items.filter((i) => i.symbol != null).map((i) => (
-                            <tr
-                                key={"contentrow_" + i.symbol}
-                                className="hover:bg-gray-100"
-                            >
-                                {<DashboardRow
-                                    content={i}
-                                    icons={props.icons}
-                                    showSaved={props.showSaved}
-                                />}
-                            </tr>
-                        ))
+                        items
+                            .filter((i) => i.symbol != null)
+                            .map((i) => (
+                                <tr
+                                    key={"contentrow_" + i.symbol}
+                                    className="hover:bg-gray-100"
+                                >
+                                    {
+                                        <DashboardRow
+                                            content={i}
+                                            icons={props.icons}
+                                            showSaved={props.showSaved}
+                                        />
+                                    }
+                                </tr>
+                            ))
                     ) : (
                         <tr>
                             <td></td>

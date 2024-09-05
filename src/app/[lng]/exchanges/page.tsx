@@ -4,7 +4,7 @@ import { getExchanges } from "../../actions/crypto";
 import ExchangeHeader from "../../components/ExchangeHeader";
 
 export default async function Exchanges() {
-    const exchanges = (await getExchanges()).sort((a, b) => a.rank - b.rank);
+    const exchanges = getExchanges();
 
     return (
         <div className=" xl:w-[800px] w-full mt-4">

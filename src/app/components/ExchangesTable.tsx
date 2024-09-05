@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { CoinDetails, Exchange } from "../actions/crypto";
 import { DashboardRow } from "./DashboardRow";
 import { IconSource } from "../actions/images";
-import {Link} from "@/navigation";
+import { Link } from "@/navigation";
 import { formatNumber } from "../utils/common";
 import { InfoBox } from "./InfoBox";
 import { useTranslations } from "next-intl";
@@ -13,9 +13,7 @@ type SortType = {
     ascending: boolean;
 };
 
-
-export default function ExchangesTable(props: { items: Exchange[] }) {
-
+export default function ExchangesTable(props: { items: Promise<Exchange[]> }) {
     const t = useTranslations("Exchanges");
 
     const columnHeaders = [
@@ -23,7 +21,11 @@ export default function ExchangesTable(props: { items: Exchange[] }) {
         <span>{t("Name")}</span>,
         <span className="flex flex-wrap">
             {t("Share %")}
-            <InfoBox><span id="shareoftotalvolumeinfo">{t("ShareOfTotalVolume")}</span></InfoBox>
+            <InfoBox>
+                <span id="shareoftotalvolumeinfo">
+                    {t("ShareOfTotalVolume")}
+                </span>
+            </InfoBox>
         </span>,
         <span className="flex flex-wrap">
             {t("Volume")}
@@ -31,12 +33,9 @@ export default function ExchangesTable(props: { items: Exchange[] }) {
         </span>,
         <span className="flex flex-wrap">
             {t("Currencies")}
-            <InfoBox>
-                {t("AmountOfCryptoFiatPairs")}
-            </InfoBox>
+            <InfoBox>{t("AmountOfCryptoFiatPairs")}</InfoBox>
         </span>,
     ];
-    
 
     const [items, setItems] = useState<Exchange[]>([]);
     const [currentSort, setCurrentSort] = useState<SortType>({
@@ -45,8 +44,11 @@ export default function ExchangesTable(props: { items: Exchange[] }) {
     });
 
     useEffect(() => {
-        setItems(props.items);
-    }, []);
+        async function loadItems(items: Promise<Exchange[]>) {
+            setItems(await items);
+        }
+        loadItems(props.items);
+    }, [props.items]);
 
     function sortBy(col: number) {
         if (currentSort.col === col) {

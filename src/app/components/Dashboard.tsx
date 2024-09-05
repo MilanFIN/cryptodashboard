@@ -14,7 +14,7 @@ export default async function Dashboard(props: { page: number }) {
 
     const images = await getImages();
 
-    const items = await getDashContent(props.page);
+    const items = getDashContent(props.page);
 
     return (
         <div className=" xl:w-[800px] w-full mt-4">
