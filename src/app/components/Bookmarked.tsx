@@ -4,7 +4,7 @@ import { CoinDetails } from "../actions/crypto";
 import { IconSource } from "../actions/images";
 import { useTranslations } from "next-intl";
 
-export default function Bookmarked(props: {coins: CoinDetails[], icons: IconSource[]}) {
+export default function Bookmarked(props: {coins: Promise<CoinDetails[]>, icons: IconSource[]}) {
 
 	const t = useTranslations("Page")
     return (

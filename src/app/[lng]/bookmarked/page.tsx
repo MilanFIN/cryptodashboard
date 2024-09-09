@@ -11,15 +11,15 @@ import { cookies } from "next/headers";
 
 export default async function SavedCoins({}: {}) {
     const bookmarks = cookies().get("bookmarked");
-    let values: CoinDetails[] = [];
+    let values: Promise<CoinDetails[]>;
+    let ids: string[] = [];
     if (bookmarks != null) {
-        const ids = bookmarks.value
+        ids = bookmarks.value
             .split(",")
             .slice(0, 10)
             .filter((i) => i != "");
-
-        values = (await getMultiple(ids)).sort((a, b) => a.rank - b.rank);
     }
+    values = getMultiple(ids);
 
     //const ids = params.ids.split("%2C").slice(0, 10);
     //const values = (await getMultiple(ids)).sort((a, b) => a.rank - b.rank);
